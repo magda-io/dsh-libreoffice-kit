@@ -127,3 +127,54 @@ jobs:
           name: comparison-reports
           path: report-*.json
           retention-days: 30
+
+  # The WASM engine on every OS (the wasm-on-every-os delta): a portable Node-only smoke test,
+  # asserting font-independent results recorded from the official 0.1.5 packages on Linux.
+  smoke:
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-24.04, ubuntu-24.04-arm, macos-latest, windows-latest]
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: write # see the qualify job: draft releases need write access to read
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22.23.5'
+      - name: Download the release's tarballs and checksums
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.release }}
+        run: |
+          set -euo pipefail
+          release=$(gh api "repos/$GITHUB_REPOSITORY/releases" --paginate --jq ".[] | select(.tag_name == env.TAG) | .id")
+          [ "$(printf '%s\n' "$release" | grep -c .)" = 1 ] || { echo "expected exactly one release tagged $TAG" >&2; exit 1; }
+          mkdir -p packages
+          gh api "repos/$GITHUB_REPOSITORY/releases/$release/assets" --paginate \
+            --jq '.[] | select((.name | endswith(".tgz")) or .name == "SHA256SUMS") | "\(.id) \(.name)"' |
+            while read -r id name; do
+              gh api -H 'Accept: application/octet-stream' "repos/$GITHUB_REPOSITORY/releases/assets/$id" > "packages/$name"
+            done
+          node qualification/packages.mjs candidate packages
+      - name: Install with npm on this OS
+        run: |
+          mkdir -p install && cd install && echo '{"private":true}' > package.json
+          npm install --ignore-scripts --no-audit --no-fund --loglevel=error ../packages/*.tgz
+          ls node_modules/@deepseek-ai
+      - run: node qualification/fetch-fixtures.mjs fixtures --no-generate
+      - name: Smoke test on ${{ runner.os }} ${{ runner.arch }}
+        run: node qualification/smoke.mjs install/node_modules/@deepseek-ai/libreoffice-kit fixtures out | tee smoke.json
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: smoke-${{ runner.os }}-${{ runner.arch }}
+          path: smoke.json
+          retention-days: 14
