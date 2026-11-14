@@ -1,0 +1,102 @@
+{
+  "recorded": "2026-11-14T10:20:25+00:00",
+  "harness": {
+    "repository": "magda-io/dsh-libreoffice-kit",
+    "commit": "83c94dc2710108ab875a25d9e760bb91b91b6e89",
+    "uncommittedChanges": false
+  },
+  "host": {
+    "machine": "aarch64",
+    "kernel": "7.0.14-linuxkit",
+    "node": "v22.23.5",
+    "image": "sha256:28ddfe9821a509952b7fe348f19d3ce8ad60495e8269ac5fbb2a26e4a4f425e6",
+    "os": "Debian GNU/Linux 13 (trixie)"
+  },
+  "packages": {
+    "baseline": {
+      "libreoffice-kit-0.1.3.tgz": "f6aabaf215b13654045daab787864ed99f5d9b66eb5bf31d526b353d5dce7a39",
+      "libreoffice-kit-wasm-0.1.3.tgz": "e456093236f261a3de872a8360943d425cb7a30578c6ff18c665f370f20f8410"
+    },
+    "reference": {
+      "libreoffice-kit-0.1.5.tgz": "f3ed9e424e7a25fc0eaee0b23ac754029343dafe7ff9daf710a86825f58ba576",
+      "libreoffice-kit-wasm-0.1.5.tgz": "4d5dda19a257d75fd09776d37a4f37708d7c2e163defede64b3377cb411ed406"
+    },
+    "candidate": {
+      "deepseek-ai-libreoffice-kit-0.1.5-magda.1.tgz": "7dd10e35cc968bf1007d203abfa64dd4de3c36a7214fc31c58f0089afda9c94a",
+      "deepseek-ai-libreoffice-kit-wasm-0.1.5-magda.1.tgz": "eb12e95afdec3ba0ba2e2910378ca4c8f355369918059848456b3683f1879696"
+    }
+  },
+  "installed": {
+    "baseline": {
+      "libreoffice-kit": "0.1.3",
+      "libreoffice-kit-wasm": "0.1.3"
+    },
+    "reference": {
+      "libreoffice-kit": "0.1.5",
+      "libreoffice-kit-wasm": "0.1.5"
+    },
+    "candidate": {
+      "libreoffice-kit": "0.1.5-magda.1",
+      "libreoffice-kit-wasm": "0.1.5-magda.1"
+    }
+  },
+  "fixtures": {
+    "manifestSha256": "57cf8b7b52179f6235e5e3010d210e68a9bb3bcd723406fb604bf5bff5c5b3eb",
+    "files": {
+      "core-docx-page-break-before.docx": "510c3289a00779ba6cb93e2e7f36dcb816dccbc30c66a4f77901b06f53260da8",
+      "core-doc-tdf37778_readonlySection.doc": "36aa7bbfa8cc6d892db69aa30a19d4aef0cd21a9c7a95b36c6a8283b6ed819ce",
+      "magda-legacy.xls": "e514b7ab85e1164a0dfc727636b302675a4c096ae63d697401b8bed31b26ab16",
+      "core-xlsx-tdf110440.xlsx": "0353bbdc7853fd8f5ac8b4d70222c61a2cb82dbb60b6146cdef236dbdeb5ac82",
+      "edge-cjk.docx": "2a7b2c43ea7f50b66fe76121e4ff865b9628704ae854312d81cb2315c3b16ef3",
+      "core-docx-custom-styles-TOC-comma.docx": "07759e2c9d57a90f5d82be3eeb2292951894ccb605a8d462967181cece11035c",
+      "core-xls-named-ranges-local.xls": "77fd6feb517dabe99b7ffc104c7346a68ccca03008de003488e1fa2794d0354d",
+      "core-doc-image-comment-at-char.doc": "a2ffbc4e799b7c5052d83d9e38646d1c96d177583420f5f5f5d7256add7a186e",
+      "core-ppt-tdf165262.ppt": "1f159de4bb760505f1cab5450870aad4b9ce0a020807d7968a4f8500ac563928",
+      "core-xls-cell-multi-line.xls": "1edfbb525b7f63e9b5342337a2f4595b943eee2d2d3c7ffa1766e307b893a74c",
+      "core-ppt-tdf49856.ppt": "6d1962d4dbf397bf1bdf5ff298a29cad5c52654e7d40ffe67726438dcbc2a95f",
+      "core-doc-tdf106541_cancelOutline.doc": "8b7bb75a3beb223f530903972ad0103ff150fbe708d56ad755e118c195879076",
+      "core-ppt-tdf169705.ppt": "262df470f0a25ef8439a0e9cedbb73deacce97ff65f45752423c2ca2e2313dc7",
+      "core-pptx-tdf114913.pptx": "23f2f4e9e28e73b52194653ab712304379f037512121a97a6ac862e1c0477edd",
+      "magda-truncated.docx": "7b66d33f888fe61d7152253f0584f4836bf38c5e569ee923da18f62e2e2145c3",
+      "core-xlsx-tdf83671_SmartArt_import.xlsx": "e713a591e918b57da4c41dcec4a168e82ee6d02b5eca423ec2a1fb8598370fd9",
+      "magda-zip-encrypted.xlsx": "d6e69dca7b9d23a67da1038e774b39918ab9943c5352601bc6036893f699fadf",
+      "core-doc-tdf123433_fillStyleStop.doc": "bee4c3d17ba7b3cc998384bcafbe2aa0e14a7ff3547d0f1efb4baaedcfcd18ca",
+      "core-doc-n816603.doc": "77df6fe10f3c94b5e376ada719f803b6dd5ace1fb40a8cb0c90d9e0e9aba38ff",
+      "core-xlsx-universal-content-strict.xlsx": "fbd7591328bdb1b4d3341efcc692d42669b2e6f754babdc2b7b654fe050e2fc5",
+      "core-docx-tdf114308.docx": "d9f9a7006f26a79d30e696fb06dfc885189ae699cf919976bb05b1aecff501cf",
+      "core-pptx-n821567.pptx": "02b4e926006bc4840b3e07ef1f7964af72ec8d7304da039d994104161c250883",
+      "core-xls-matrix.xls": "1fe46579e8860913a5f9f3a06696c417ea94d4b20fb6859a429bc4a2232d1a7d",
+      "core-ppt-tdf49561.ppt": "a7f47bced272ef51dc756950886903fae5dda727bc2b24118989b76796cc0e17",
+      "edge-rtl.xlsx": "e0d6d9a0c1bbc72a3f27b03b3e0b4a98742d6a3fd9fc11864687f9bb63fb5ccf",
+      "core-xlsx-tdf145057.xlsx": "726dcdc188086c6d042ee2b71df1a7e94f47a982df3f4f24ac3b868398a22581",
+      "core-doc-tdf89377_tableWithBreakBeforeParaStyle.doc": "0a25bf2bce4a34510e442689287894f6f6be58cfea5a575e25cb69ae5d0bbe5d",
+      "magda-briefing.pptx": "608a9fbfe85381e1e3898bdaa30458737a5c6d22cdcc5839677c03886df2e114",
+      "core-pptx-tcPr-vert-roundtrip.pptx": "88ca1a5924595ac97b817934dc44bfea2ecf2ff4efc69e321553269c0de0bcc8",
+      "core-pptx-tdf116350-texteffects.pptx": "ee628135a8a32a5fac5bd4a2795bb51dd052c719ca3622b76e6eb8acd48d4303",
+      "magda-budget.xlsx": "50be96a6969d4ec5bbe2779455550f04a9b06d309e9e7d9b92eef93f3467d29b",
+      "magda-misnamed-spreadsheet.docx": "50be96a6969d4ec5bbe2779455550f04a9b06d309e9e7d9b92eef93f3467d29b",
+      "magda-shared-formulas.xlsx": "4cd8f371a569fe64efdd71e355d376d60a3777ca262f16a7b25ddc67f96d069c",
+      "magda-charts.xlsx": "b761e173dc608f450e8b7c609e382b67ff01dc72cdd7ba93cc5afe157c632372",
+      "core-pptx-tdf104015.pptx": "5a986fa43afc51500616b5561202faaa8250afe435cb34758abb023569fa9a8c",
+      "edge-missing-font.docx": "756bcf2eb02fc2c14d6d2aae8e884079db18d7093cbb5309111b386a5d57b565",
+      "edge-long.docx": "743c6d168b7578771c4004b2dbb36a58a77f7c3ca6c92a36305080c4288e796f",
+      "core-xlsx-tdf112567.xlsx": "1f9fbbb508a24264b315506703dde6703f46a81bb5d442e47bc9db7d965daf72",
+      "core-xlsx-complex_icon_set.xlsx": "ffb217fc2bc772bd95f5651a684048bf741ce0511b32cd596fe498bc4d2b3164",
+      "magda-document.odt": "ec4dc070ec905515bd01baffb2d8e5453575e08d71306b9b3bdf1db395b2cef1",
+      "core-pptx-tdf98603.pptx": "59bd5c28d4783f6a2e1274ede5ef44e9c6f45a884e7e7f9966c108d70412dcb0",
+      "magda-legacy.doc": "2a46ec7e3ecced4814de8fab282d6d77f27163ce4fcd9df849b47aeec44f89b0",
+      "magda-report.docx": "081ce08cd28c0a60b1f94befe9f0b6a06ab625386923e158409b86bd781c7ca2",
+      "core-ppt-tdf143315-WordartWithoutBullet.ppt": "b5f12ceb8829d662cef27d8b5b9e8c6b79e24cc4ecaaf7c001619cdd50d4f8c4",
+      "core-ppt-tdf119629.ppt": "0ed17e23703361131de3e83f23b5a7162e19c7183b94d02b19d5089a039680ba",
+      "core-docx-fdo64350.docx": "3a1d892bb30d9187a163bd5800313c351b717536a1d5d5b8331e6f03b7d73bc4",
+      "core-xls-pivottable_number_grouping.xls": "6b4f96a131c3840938e2f757f30931ca6a824407b44f7512faab915ff270c0ff",
+      "magda-strict-shared-formulas.xlsx": "10c1c819c6db781e98bbc39d678ae52cc260329d846f74a1c122fcc7ca60728e",
+      "magda-encrypted.xlsx": "4c4acbc5a5d98a3f0c5b74352890735ad2aa710e2bfe840bcbce11f141e777fe",
+      "core-xls-forum-mso-de-48440.xls": "943f4c8820d0c29661dc43f5f04468fe6ee192a6304b5df7c3f55214b8ee73d1",
+      "core-docx-tdf91594.docx": "37fdc13f5a8d66f1e886587209ab1c9a26c41ed53bad0a9c90243b0af4f987c7",
+      "core-docx-tdf148361.docx": "dec163f6fd004a12f8fefc59639804175c877747a4ccec33445490f58a9a15e7",
+      "core-xls-pivottable_date_field_filter.xls": "46bd42a11e55dc6d200113d50cedb7472fef5289720b4179a0298ad2afe5519c",
+      "magda-uncalculated.xlsx": "e91ccf662a37830759d15e9676ce654a618518d1787789e8842a0624dc4e57b1"
+    }
+  }
+}
