@@ -1,0 +1,15 @@
+{
+  "reconstruction": "94ee75460b933b6e0ca4528d955f8e7cc41bc9a0",
+  "description": "MAGDA changes after the verified 0.1.5 reconstruction. scripts/verify-magda-deltas.mjs requires every file changed since the reconstruction commit to be listed here, and reruns the reconstruction gate at that commit.",
+  "deltas": [
+    {
+      "id": "delta-gate",
+      "summary": "Verify the reconstruction at its pinned commit and require a declared delta for every later change.",
+      "files": [
+        ".github/workflows/magda-reconstruction.yml",
+        "package.json",
+        "scripts/verify-magda-deltas.mjs"
+      ]
+    }
+  ]
+}
