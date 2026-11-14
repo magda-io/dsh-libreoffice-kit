@@ -111,7 +111,7 @@ runtime tests.
 ## MAGDA deltas
 
 The reconstruction ends at commit
-[`94ee754`](https://github.com/magda-io/dsh-libreoffice-kit/commit/94ee75460b933b6e0ca4528d955f8e7cc41bc9a0).
+[`8bdc60f`](https://github.com/magda-io/dsh-libreoffice-kit/commit/8bdc60f1710c986404001ee31bdee0a15f9a56e9).
 Every later MAGDA change is a delta recorded in [`MAGDA-DELTAS.json`](MAGDA-DELTAS.json), with
 the files it changes. `pnpm run verify:magda` (also in CI):
 
@@ -120,7 +120,7 @@ the files it changes. `pnpm run verify:magda` (also in CI):
 3. reruns the reconstruction gate at that commit, so the byte-identity proof against the official
    0.1.5 packages still holds.
 
-Merge pull requests into `magda/0.1.5` with merge commits, so the pinned commit stays in the
+Merge pull requests into `magda` with merge commits, so the pinned commit stays in the
 branch history.
 
 | Delta              | Change                                                                                                                                                                                                                                                           |
