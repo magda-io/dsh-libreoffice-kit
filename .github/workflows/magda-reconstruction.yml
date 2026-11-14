@@ -1,12 +1,11 @@
-# MAGDA checks for the magda/* maintenance branches. Upstream's release and
+# MAGDA checks for the magda development branch and pull requests. Upstream's release and
 # engine-build workflows are not part of the public tree.
 name: MAGDA reconstruction
 
 on:
   push:
-    branches: ['magda/**']
+    branches: [magda]
   pull_request:
-    branches: ['magda/**']
 
 permissions:
   contents: read

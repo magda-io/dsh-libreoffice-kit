@@ -1,7 +1,7 @@
 # MAGDA reconstruction of LibreOffice Kit 0.1.5
 
-This `magda/0.1.5` branch is maintained by the [MAGDA](https://github.com/magda-io/magda)
-project. It is a **reconstruction**. It is not upstream's 0.1.5 Git history, and the TypeScript
+The `magda` branch, this repository's default branch, is maintained by the
+[MAGDA](https://github.com/magda-io/magda) project. It is a **reconstruction**. It is not upstream's 0.1.5 Git history, and the TypeScript
 here is not upstream's original source text.
 
 - **Baseline:** the public upstream source at

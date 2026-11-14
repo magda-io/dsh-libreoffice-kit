@@ -2,7 +2,7 @@
 description: "Font-friendly Office-to-PDF conversion in Node.js, with prebuilt LibreOffice engines."
 kind: "package-library"
 ---
-> **MAGDA branch:** this `magda/0.1.5` line is a reconstruction maintained by MAGDA, not upstream 0.1.5 history. See [MAGDA.md](MAGDA.md).
+> **MAGDA branch:** the `magda` branch is MAGDA's development line, starting with a reconstruction of 0.1.5 that is not upstream 0.1.5 history. See [MAGDA.md](MAGDA.md).
 
 # @deepseek-ai/libreoffice-kit
 
