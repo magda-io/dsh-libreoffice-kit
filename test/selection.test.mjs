@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { enginePrefix, hostTarget, kitManifest, kitNativeTargets, releaseTargets, targets } from '../scripts/platform-matrix.mjs';
+import { enginePrefix, hostTarget, kitManifest, kitNativeTargets, releaseTag, releaseTargets, targets } from '../scripts/platform-matrix.mjs';
 import { githubMatrix } from '../scripts/github-matrix.mjs';
 
 test('platform matrix preserves libc rather than guessing glibc', () => {
@@ -41,4 +41,10 @@ test('removed musl targets cannot enter development or release selection', () =>
     adapter.optionalDependencies = { [`${enginePrefix}-${platform}`]: 'workspace:*' };
     assert.throws(() => kitNativeTargets(adapter), /Unknown native optional dependency/);
   }
+});
+
+// MAGDA: releases are tagged v<version> on the magda branch.
+test('release tags take the form v<version>', () => {
+  assert.equal(releaseTag('0.1.5-magda.1'), 'v0.1.5-magda.1');
+  assert.equal(releaseTag(kitManifest().version), `v${kitManifest().version}`);
 });

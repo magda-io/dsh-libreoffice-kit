@@ -36,6 +36,15 @@
         "test/release-publish.test.mjs",
         "test/selection.test.mjs"
       ]
+    },
+    {
+      "id": "release-tag-format",
+      "summary": "Tag releases v<version> (for example v0.1.5-magda.1) instead of upstream's libreoffice-kit-v<version>.",
+      "files": [
+        "scripts/platform-matrix.mjs",
+        "scripts/verify-release.mjs",
+        "test/selection.test.mjs"
+      ]
     }
   ]
 }

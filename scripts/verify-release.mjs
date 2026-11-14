@@ -24,8 +24,8 @@ export function verifyRelease({ repo = root, platforms, metadataOnly = false } =
   }
   const ref = process.env.GITHUB_REF ?? '';
   const tag = `refs/tags/${releaseTag(workspace.version)}`;
-  if (ref.startsWith('refs/tags/libreoffice-kit-v')) assert(ref === tag, `Release tag/version mismatch; expected ${releaseTag(workspace.version)}`);
-  if (process.env.RELEASE_PUBLISH === 'true') assert(ref === tag, 'Publishing requires the matching libreoffice-kit-v* release tag');
+  if (ref.startsWith('refs/tags/v')) assert(ref === tag, `Release tag/version mismatch; expected ${releaseTag(workspace.version)}`);
+  if (process.env.RELEASE_PUBLISH === 'true') assert(ref === tag, 'Publishing requires the matching v* release tag');
   if (!metadataOnly) {
     for (const platform of platforms) {
       const row = matrix.find((entry) => entry.prebuild.platform === platform);

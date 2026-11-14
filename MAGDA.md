@@ -123,10 +123,11 @@ the files it changes. `pnpm run verify:magda` (also in CI):
 Merge pull requests into `magda` with merge commits, so the pinned commit stays in the
 branch history.
 
-| Delta              | Change                                                                                                                                                                                                                                                           |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `delta-gate`       | The gate described above.                                                                                                                                                                                                                                        |
-| `wasm-on-every-os` | The WASM engine is the engine on Linux, macOS and Windows. The adapter declares no native engine packages, so no install fetches upstream's native binaries. The WASM package carries no OS restriction. `qualification/smoke.mjs` checks the engine on each OS. |
+| Delta                | Change                                                                                                                                                                                                                                                           |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `delta-gate`         | The gate described above.                                                                                                                                                                                                                                        |
+| `wasm-on-every-os`   | The WASM engine is the engine on Linux, macOS and Windows. The adapter declares no native engine packages, so no install fetches upstream's native binaries. The WASM package carries no OS restriction. `qualification/smoke.mjs` checks the engine on each OS. |
+| `release-tag-format` | Releases are tagged `v<version>`, for example `v0.1.5-magda.1`, instead of upstream's `libreoffice-kit-v<version>`.                                                                                                                                              |
 
 ## Not in scope
 
