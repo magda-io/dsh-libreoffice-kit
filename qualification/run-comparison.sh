@@ -28,7 +28,7 @@ cp "$repo/package.json" "$out/package.json"
 
 docker build -q -t kit-qualification "$here" >/dev/null
 image=$(docker image inspect -f '{{.Id}}' kit-qualification)
-qrun() { docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$out":/work kit-qualification "$@"; }
+qrun() { docker run --rm -i --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$out":/work kit-qualification "$@"; }
 
 qrun sh -c 'set -e
   node qualification/fetch-fixtures.mjs fixtures
