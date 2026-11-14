@@ -83,7 +83,7 @@ with open('outputs.sha256', 'w') as out:
     for path, digest in sorted(tree('sets').items()):
         out.write(f'{digest}  sets/{path}\n')
 PY
-tar -C "$out" -czf "$out/comparison-evidence.tar.gz" environment.json outputs.sha256 reports sets fixtures logs-*.txt
+(cd "$out" && tar -czf comparison-evidence.tar.gz environment.json outputs.sha256 reports sets fixtures logs-*.txt)
 echo "evidence: $out (bundle comparison-evidence.tar.gz)"
 cat "$out/reports/summary.md"
 exit $status
