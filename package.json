@@ -22,7 +22,8 @@
     "release:publish": "node scripts/release-publish.mjs",
     "test:adapter": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "typecheck": "tsc -b packages/entry"
+    "typecheck": "tsc -b packages/entry",
+    "verify:reconstruction": "node scripts/verify-reconstruction.mjs"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
