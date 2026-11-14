@@ -14,12 +14,13 @@ import { corePatchFiles } from '../engine/native/core-patches.mjs';
 import { run } from '../scripts/pack-utils.mjs';
 import { reversionEngine } from '../scripts/reversion-engine.mjs';
 
-test('runtime targets select native engines for macOS/Windows and WASM only for Linux', () => {
-  assert.deepEqual(artifactPlan('node24-linux-x64,node24-win-x64'), ['win32-x64', 'wasm']);
-  assert.deepEqual(artifactPlan('node24-macos-arm64,node24-linux-arm64'), ['darwin-arm64', 'wasm']);
-  assert.deepEqual(artifactPlan('node24-macos-x64,node24-win-arm64'), ['darwin-x64', 'win32-arm64']);
+// MAGDA releases no native engines, so every runtime target uses the WASM engine.
+test('runtime targets select the WASM engine on every OS when no native engine is released', () => {
+  assert.deepEqual(artifactPlan('node24-linux-x64,node24-win-x64'), ['wasm']);
+  assert.deepEqual(artifactPlan('node24-macos-arm64,node24-linux-arm64'), ['wasm']);
+  assert.deepEqual(artifactPlan('node24-macos-x64,node24-win-arm64'), ['wasm']);
   assert.deepEqual(artifactPlan('node24-linux-arm64'), ['wasm']);
-  assert.deepEqual(artifactPlan(), ['darwin-arm64', 'darwin-x64', 'win32-arm64', 'win32-x64', 'wasm']);
+  assert.deepEqual(artifactPlan(), ['wasm']);
   assert.throws(() => artifactPlan('node24-linux-x64,'), /Unknown or empty/);
   assert.throws(() => artifactPlan('node24-freebsd-x64'), /Unknown or empty/);
 });

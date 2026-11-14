@@ -88,7 +88,8 @@ export function verifyEngineMetadata(manifest, prebuild) {
   }
   const exact = (actual, expected) => JSON.stringify(actual) === JSON.stringify(expected);
   if (prebuild.platform === 'wasm') {
-    assert(JSON.stringify(manifest.os) === '["linux"]' && manifest.cpu === undefined && manifest.libc === undefined, 'WASM package must install only on Linux, for every CPU and libc');
+    // MAGDA: the WASM engine is the engine on every OS, so its package carries no OS restriction.
+    assert(manifest.os === undefined && manifest.cpu === undefined && manifest.libc === undefined, 'WASM package must install on every OS, CPU and libc');
     assert(engine?.kind === 'wasm' && engine.loader === 'assets/soffice.cjs' && engine.wasm === 'assets/soffice.wasm'
       && engine.data === 'assets/soffice.data' && engine.metadata === 'assets/soffice.data.js.metadata'
       && engine.programDirectory === '/instdir/program', 'Unsupported WASM engine paths');

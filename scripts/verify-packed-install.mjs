@@ -41,7 +41,6 @@ export function verifyPackedInstall(directory, options = {}) {
   const wasmOnly = options.wasmOnly ?? (!options.nativeOnly && process.platform === 'linux');
   const { nativeOnly = !wasmOnly, expectedBackend = wasmOnly ? 'wasm' : 'native', keep } = options;
   assert(!(wasmOnly && nativeOnly), 'wasmOnly and nativeOnly are mutually exclusive');
-  assert(!wasmOnly || process.platform === 'linux', 'WASM installation is supported only on Linux');
   if (keep) assert(!existsSync(keep), `Retained installation destination already exists: ${keep}`);
   const release = readJson(join(directory, 'release.json'));
   assert(release.schemaVersion === 1, 'Unsupported release manifest');

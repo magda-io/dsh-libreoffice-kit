@@ -195,7 +195,7 @@ test('already published WASM is retained while new native engines and the adapte
     return stageSuccess(args, publication);
   } });
   assert.deepEqual(writes, [...releaseTargets([]).filter(platform => platform !== 'wasm').map(platform => `/temporary/${platform}.tgz`), '/temporary/entry.tgz']);
-  assert.equal(result.staged, 5);
+  assert.equal(result.staged, releaseTargets([]).length); // every native engine, plus the adapter
   assert.equal(result.skippedPublished, 1);
 });
 

@@ -150,13 +150,12 @@ export async function resolveEngine(resolvePackage: (name: string) => string = n
     const name = `${ENGINE_PREFIX}-${target}`
     let packageFile: string | undefined
     try { packageFile = resolvePackage(name) } catch (error) {
-      // A missing native package permits WASM only on Linux; broken exports reject on every host.
+      // MAGDA: a missing native package falls back to WASM on every host; broken exports still reject.
       const failure = error as { code?: unknown; message?: unknown } | null
       const missing = failure?.code === 'MODULE_NOT_FOUND' && typeof failure.message === 'string'
         && failure.message.includes(`${name}/package.json`)
       if (!missing) throw error
       if (packageExists(name)) throw new Error(`Installed LibreOfficeKit package is incomplete: ${name}`, { cause: error })
-      if (platform !== 'linux') throw new Error(`Required LibreOfficeKit native package is missing: ${name}`, { cause: error })
     }
     if (packageFile !== undefined) {
       const engine = await readEngine(packageFile, 'native', target)
@@ -167,7 +166,7 @@ export async function resolveEngine(resolvePackage: (name: string) => string = n
       if (!unsupported) return engine
     }
   }
-  if (platform !== 'linux') throw new Error(`Unsupported LibreOfficeKit host: ${platform}-${arch}`)
+  if (!['linux', 'darwin', 'win32'].includes(platform)) throw new Error(`Unsupported LibreOfficeKit host: ${platform}-${arch}`)
   return readEngine(resolvePackage(`${ENGINE_PREFIX}-wasm`), 'wasm', 'wasm')
 }
 
