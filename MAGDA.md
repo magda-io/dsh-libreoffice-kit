@@ -116,7 +116,8 @@ Every later MAGDA change is a delta recorded in [`MAGDA-DELTAS.json`](MAGDA-DELT
 the files it changes. `pnpm run verify:magda` (also in CI):
 
 1. requires that commit to be an ancestor of the branch;
-2. requires every file changed since then to belong to a declared delta;
+2. requires every file changed since then to belong to a declared delta (recorded evidence under
+   `qualification/evidence/` is exempt);
 3. reruns the reconstruction gate at that commit, so the byte-identity proof against the official
    0.1.5 packages still holds.
 

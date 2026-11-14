@@ -13,6 +13,8 @@ import { pnpm } from './pack-utils.mjs';
 
 const ledger = 'MAGDA-DELTAS.json';
 const always = new Set(['MAGDA.md', ledger]);
+// Recorded qualification evidence documents a release; it changes no source, recipe or tooling.
+const records = /^qualification\/evidence\//;
 
 function git(args, cwd = root) {
   const result = spawnSync('git', args, { cwd, encoding: 'utf8' });
@@ -36,7 +38,7 @@ export function checkDeltas(repo = root) {
   }
   // Committed changes only: local build output (for example a staged packages/wasm) is not part of the branch.
   const committed = new Set(git(['diff', '--name-only', record.reconstruction, 'HEAD', '--'], repo).split('\n').filter(Boolean));
-  const undeclared = [...committed].filter(file => !always.has(file) && !declared.has(file)).sort();
+  const undeclared = [...committed].filter(file => !always.has(file) && !records.test(file) && !declared.has(file)).sort();
   const unused = [...declared].filter(file => !committed.has(file)).sort();
   return { record, undeclared, unused };
 }
