@@ -8,9 +8,10 @@ import { kitManifest, kitNativeTargets, packageMatrix } from '../scripts/platfor
 import { npm } from '../scripts/pack-utils.mjs';
 
 // Tiny package archives exercise npm's real OS/CPU selection without engine binaries or registry access.
+// MAGDA: the adapter declares only the WASM engine, which installs on every OS and CPU.
 for (const [os, cpu, expected] of [
-  ['darwin', 'arm64', 'darwin-arm64'], ['darwin', 'x64', 'darwin-x64'],
-  ['win32', 'arm64', 'win32-arm64'], ['win32', 'x64', 'win32-x64'],
+  ['darwin', 'arm64', 'wasm'], ['darwin', 'x64', 'wasm'],
+  ['win32', 'arm64', 'wasm'], ['win32', 'x64', 'wasm'],
   ['linux', 'x64', 'wasm'], ['linux', 'arm64', 'wasm'],
 ]) test(`npm installs only ${expected} for ${os}/${cpu}`, t => {
   const work = mkdtempSync(join(tmpdir(), 'kit-platform-install-'));

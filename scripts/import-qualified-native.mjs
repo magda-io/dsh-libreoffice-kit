@@ -6,10 +6,9 @@ import { assert } from './verify-artifacts.mjs';
 import { isMain, releaseTargets, sourceRepository } from './platform-matrix.mjs';
 
 /** Parse platform-to-run IDs without permitting shell syntax, unknown targets or unqualified workflows. */
-export function nativeImports(value, readRun) {
+export function nativeImports(value, readRun, targets = releaseTargets([]).filter(platform => platform !== 'wasm')) {
   const mapping = JSON.parse(value);
   assert(mapping !== null && typeof mapping === 'object' && !Array.isArray(mapping), 'Native runs must be a platform-to-run-ID object');
-  const targets = releaseTargets([]).filter(platform => platform !== 'wasm');
   return Object.entries(mapping).map(([platform, id]) => {
     assert(targets.includes(platform) && typeof id === 'string' && /^[1-9][0-9]*$/.test(id), 'Invalid native platform or run ID');
     const record = readRun(id);

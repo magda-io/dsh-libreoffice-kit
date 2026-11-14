@@ -177,16 +177,29 @@ describe('engine resolution', () => {
     } finally { await rm(fixture.directory, { recursive: true, force: true }) }
   })
 
-  it.each(['darwin', 'win32'])('%s never resolves WASM when its native package is missing', async platform => {
-    const resolve = vi.fn((name: string): never => {
-      throw Object.assign(new Error(`Cannot find module '${name}/package.json'`), { code: 'MODULE_NOT_FOUND' })
-    })
-    await expect(resolveEngine(resolve, () => false, { platform, arch: 'arm64' }))
-      .rejects.toThrow(`Required LibreOfficeKit native package is missing: @deepseek-ai/libreoffice-kit-${platform}-arm64`)
-    expect(resolve).toHaveBeenCalledExactlyOnceWith(`@deepseek-ai/libreoffice-kit-${platform}-arm64`)
+  // MAGDA: macOS and Windows fall back to the WASM engine, as Linux does.
+  it.each(['darwin', 'win32'])('%s resolves WASM when its native package is missing', async platform => {
+    const fixture = await engineFixture()
+    try {
+      const resolve = vi.fn((name: string): string => {
+        if (name === '@deepseek-ai/libreoffice-kit-wasm') return join(fixture.wasm, 'package.json')
+        throw Object.assign(new Error(`Cannot find module '${name}/package.json'`), { code: 'MODULE_NOT_FOUND' })
+      })
+      await expect(resolveEngine(resolve, () => false, { platform, arch: 'arm64' })).resolves.toMatchObject({ backend: 'wasm' })
+      expect(resolve.mock.calls.map(([name]) => name)).toEqual([`@deepseek-ai/libreoffice-kit-${platform}-arm64`, '@deepseek-ai/libreoffice-kit-wasm'])
+    } finally { await rm(fixture.directory, { recursive: true, force: true }) }
   })
 
-  it.each([['darwin', 'riscv64'], ['win32', 'ia32'], ['freebsd', 'x64']])('rejects unsupported %s/%s without resolving an engine', async (platform, arch) => {
+  it.each([['darwin', 'riscv64'], ['win32', 'ia32']])('%s/%s without a native target resolves WASM', async (platform, arch) => {
+    const fixture = await engineFixture()
+    try {
+      const resolve = vi.fn((): string => join(fixture.wasm, 'package.json'))
+      await expect(resolveEngine(resolve, () => false, { platform, arch })).resolves.toMatchObject({ backend: 'wasm' })
+      expect(resolve).toHaveBeenCalledExactlyOnceWith('@deepseek-ai/libreoffice-kit-wasm')
+    } finally { await rm(fixture.directory, { recursive: true, force: true }) }
+  })
+
+  it.each([['freebsd', 'x64'], ['aix', 'ppc64']])('rejects unsupported %s/%s without resolving an engine', async (platform, arch) => {
     const resolve = vi.fn()
     await expect(resolveEngine(resolve, () => false, { platform, arch })).rejects.toThrow('Unsupported LibreOfficeKit host')
     expect(resolve).not.toHaveBeenCalled()
