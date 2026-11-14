@@ -4,7 +4,7 @@ import { writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { withWasmSession, engineError, type WasmConversionRequest, type WasmSession } from './wasm.ts'
 import { numericCall, engineString, pdfPages, renderRegion } from './engine-rendering.ts'
-import { splitRasterRectangle, tileDimensions, writerPages, type EnginePage } from './rendering.ts'
+import { splitRasterRectangle, tileDimensions, unmirrorRtlTile, writerPages, type EnginePage } from './rendering.ts'
 import { dataArea, parseCellRange, rangeName, sheetPartInfo, sheetRangeRectangle, type Rectangle, type SheetGeometry } from './sheet-geometry.ts'
 import { selectedPages, type ImageRenderSpec, type RenderedImage, type RenderImagesResult } from './image-operations.ts'
 import { ConversionError } from './errors.ts'
@@ -95,6 +95,7 @@ export async function renderImagesWithWasm(request: Omit<WasmConversionRequest, 
         await session.idle()
       }
       const tile = renderRegion(session.module, session.document, { pageIndex: 0, ...region.rectangle, scale }, [region.page], () => engineError(session.module, session.office), session.pdf)
+      if (region.rtl) unmirrorRtlTile(tile)
       const png = encodePng(tile.width, tile.height, tile.rgba)
       total += png.length
       if (total > options.maxOutputBytes) throw new ConversionError('output-too-large', 'PNG batch exceeds maxOutputBytes.')

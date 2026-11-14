@@ -1,15 +1,15 @@
 /** Direct native LibreOfficeKit/PDFium rasterization through one operation-owned helper. */
 import { createHash } from 'node:crypto'
-import { spawn } from 'node:child_process'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { createInterface } from 'node:readline'
 import { join, resolve } from 'node:path'
 import { prepareNativeFontProfile, nativeEnvironment, withNativeEngine } from './native.ts'
+import { spawnNative } from './native-process.ts'
 import { ConversionError, failureCode } from './errors.ts'
 import { selectedPages, type ImageRenderSpec, type RenderedImage, type RenderImagesResult } from './image-operations.ts'
 import { dataArea, parseCellRange, rangeName, sheetPartInfo, sheetRangeRectangle, type Rectangle, type SheetGeometry } from './sheet-geometry.ts'
 import { encodePng } from './png.ts'
-import { rgbaPixels, splitRasterRectangle, tileDimensions, writerPages, type EnginePage } from './rendering.ts'
+import { rgbaPixels, splitRasterRectangle, unmirrorRtlTile, tileDimensions, writerPages, type EnginePage } from './rendering.ts'
 import type { FontSubstitution } from './font-loader.ts'
 import type { NativeEngine } from './engine.ts'
 import type { ResolvedOptions } from './options.ts'
@@ -94,11 +94,11 @@ export async function renderImagesWithNative(request: {
   await prepareNativeFontProfile(profile, substitutions)
   return withNativeEngine<RenderImagesResult>(engine, profile, async engine => {
     signal.throwIfAborted()
-    const child = spawn(engine.executable, ['--operation', 'render-images', '--program-directory', engine.programDirectory,
+    const child = spawnNative(engine.executable, ['--operation', 'render-images', '--program-directory', engine.programDirectory,
       '--input-path', inputPath, '--scratch-directory', scratch, '--profile-directory', profile,
       '--max-output-bytes', String(options.maxOutputBytes), '--max-image-resolution', String(options.maxImageResolution),
       ...fonts.flatMap(path => ['--font-file', path])],
-    { stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true, env: nativeEnvironment(profile, engine.programDirectory) })
+    nativeEnvironment(profile, engine.programDirectory))
     const lines: string[] = []
     const waiters: ((line: string) => void)[] = []
     const output = createInterface({ input: child.stdout })
@@ -179,6 +179,7 @@ export async function renderImagesWithNative(request: {
         const raw = await readFile(painted.path)
         if (raw.byteLength !== width * height * 4) throw new Error('LibreOffice native renderer returned incomplete pixels.')
         const rgba = ready.documentType === 'pdf' ? new Uint8ClampedArray(raw) : rgbaPixels(raw, ready.tileMode)
+        if (region.rtl) unmirrorRtlTile({ width, height, rgba })
         const png = encodePng(width, height, rgba)
         total += png.byteLength
         if (total > options.maxOutputBytes) throw new ConversionError('output-too-large', 'PNG batch exceeds maxOutputBytes.')

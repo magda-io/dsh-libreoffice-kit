@@ -1,9 +1,9 @@
 /** Per-render native helper process ownership and bounded result transport. */
-import { spawn } from 'node:child_process'
 import { copyFile, mkdir, symlink, unlink, writeFile } from 'node:fs/promises'
 import { constants } from 'node:fs'
 import { join, relative } from 'node:path'
 import { ConversionError, failureCode } from './errors.ts'
+import { spawnNative } from './native-process.ts'
 import { profileXml } from './profile.ts'
 import { LOCALIZED_FONT_SEARCH_NAMES } from './native-font-names.ts'
 import type { FontSubstitution } from './font-loader.ts'
@@ -51,6 +51,7 @@ export async function prepareNativeFontProfile(profile: string, substitutions: r
 }
 
 /**
+ * Native conversion and rendering disable printer discovery to avoid driver UI and network waits.
  * Linux searches the verified program directory; ambient loader overrides and credentials are excluded.
  * @param profile - Conversion-owned profile directory the helper treats as home.
  * @param programDirectory - Verified engine program directory.
@@ -66,7 +67,8 @@ export function nativeEnvironment(profile: string, programDirectory: string, sou
     if (value !== undefined) env[key] = value
   }
   if (platform === 'linux') env.LD_LIBRARY_PATH = programDirectory
-  return Object.assign(env, { HOME: profile, USERPROFILE: profile, TMPDIR: profile, TMP: profile, TEMP: profile })
+  return Object.assign(env, { HOME: profile, USERPROFILE: profile, TMPDIR: profile, TMP: profile, TEMP: profile,
+    SAL_DISABLE_PRINTERLIST: '1', SAL_DISABLE_DEFAULTPRINTER: '1' })
 }
 
 /**
@@ -110,11 +112,12 @@ export async function runNative(engine: NativeEngine, options: ResolvedOptions, 
   return withNativeEngine(engine, profile, async engine => {
     signal.throwIfAborted()
     const env = nativeEnvironment(profile, engine.programDirectory)
-    const child = spawn(engine.executable, ['--program-directory', engine.programDirectory, '--input-path', input,
+    const child = spawnNative(engine.executable, ['--program-directory', engine.programDirectory, '--input-path', input,
       '--output-path', output, '--profile-directory', profile, '--max-output-bytes', String(options.maxOutputBytes),
       '--max-image-resolution', String(options.maxImageResolution), '--format', operation.format, '--recalculate', String(operation.recalculate),
       ...(operation.sheet === undefined ? [] : ['--sheet', operation.sheet]), ...fonts.flatMap(path => ['--font-file', path])],
-    { stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true, env })
+    env)
+    child.stdin.end()
     let stdout = ''
     let stderr = ''
     let failure: Error | undefined

@@ -58,8 +58,8 @@ describe('engine discovery', () => {
       const manifest = JSON.parse(readFileSync(join(import.meta.dirname, '../../', platform, 'package.json'), 'utf8')) as { version: string }
       expect(version).toBe(manifest.version)
     }
-    expect(ENGINE_VERSIONS['win32-x64']).toBe('0.1.3')
-    expect(ENGINE_VERSIONS.wasm).toBe('0.1.3')
+    expect(ENGINE_VERSIONS['win32-x64']).toBe('0.1.5')
+    expect(ENGINE_VERSIONS.wasm).toBe('0.1.5')
   })
 
   it('selects glibc and rejects unsupported libc or host architectures', () => {

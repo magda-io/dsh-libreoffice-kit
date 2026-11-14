@@ -2,4 +2,7 @@ packages:
   - packages/*
 allowBuilds:
   esbuild: true
+  # koffi loads only for Windows native helper pipes; its install hook only
+  # selects or compiles a native binding, which building and testing do not need.
+  koffi: false
 pnpmfile: .pnpmfile.mjs
