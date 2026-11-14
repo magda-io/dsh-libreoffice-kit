@@ -3,9 +3,15 @@
 # write an evidence directory. Needs only Docker on the host; everything else runs in the
 # qualification image.
 #
-# Usage: qualification/run-comparison.sh <candidate dir> <output dir>
+# Usage: qualification/run-comparison.sh [--platform <os/arch>] [--fixtures <dir>] <candidate dir> <output dir>
 #   <candidate dir>  the release's adapter and WASM .tgz files and its SHA256SUMS
+#                    (qualification/download-release.sh <tag> <dir> fetches them)
 #   <output dir>     new directory for the evidence
+#   --platform       run the qualification image for another platform, e.g. linux/amd64 on an
+#                    arm64 host. That is emulated: a convenience check, not qualification of the
+#                    platform; qualify on a native host (the MAGDA qualification workflow does).
+#   --fixtures       reuse an existing fixture directory (for example to compare two hosts on
+#                    identical generated edge cases) instead of downloading and generating them
 #
 # Sets (run concurrently, one container each, over the same fixture files):
 #   baseline         official 0.1.3 npm packages (built from this branch's public source baseline)
@@ -16,6 +22,16 @@
 set -euo pipefail
 here=$(cd "$(dirname "$0")" && pwd)
 repo=$(cd "$here/.." && pwd)
+platform='' fixtures=''
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --platform) platform=${2:?--platform needs a value}; shift 2 ;;
+    --fixtures) fixtures=$(cd "${2:?--fixtures needs a directory}" && pwd); shift 2 ;;
+    --) shift; break ;;
+    -*) echo "unknown option $1" >&2; exit 2 ;;
+    *) break ;;
+  esac
+done
 candidate=$(cd "${1:?candidate directory}" && pwd)
 out=${2:?output directory}
 [ ! -e "$out" ] || { echo "$out already exists" >&2; exit 1; }
@@ -25,13 +41,17 @@ cp -R "$here" "$out/qualification" && mkdir -p "$out/scripts" && cp "$repo/scrip
 # packages.mjs imports the pinned reference identity from verify-reconstruction.mjs and its imports.
 for f in build-kit.mjs platform-matrix.mjs pack-utils.mjs publication-privacy.mjs verify-artifacts.mjs; do cp "$repo/scripts/$f" "$out/scripts/"; done
 cp "$repo/package.json" "$out/package.json"
+[ -z "$fixtures" ] || cp -R "$fixtures" "$out/fixtures"
 
-docker build -q -t kit-qualification "$here" >/dev/null
-image=$(docker image inspect -f '{{.Id}}' kit-qualification)
-qrun() { docker run --rm -i --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$out":/work kit-qualification "$@"; }
+platform_args=()
+[ -z "$platform" ] || platform_args=(--platform "$platform")
+image_tag=kit-qualification${platform:+-${platform//\//-}}
+docker build -q "${platform_args[@]+"${platform_args[@]}"}" -t "$image_tag" "$here" >/dev/null
+image=$(docker image inspect -f '{{.Id}}' "$image_tag")
+qrun() { docker run --rm -i "${platform_args[@]+"${platform_args[@]}"}" --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$out":/work "$image_tag" "$@"; }
 
 qrun sh -c 'set -e
-  node qualification/fetch-fixtures.mjs fixtures
+  [ -d fixtures ] || node qualification/fetch-fixtures.mjs fixtures
   node qualification/packages.mjs reference packages-reference
   node qualification/packages.mjs baseline packages-baseline
   node qualification/packages.mjs candidate packages-candidate
@@ -45,7 +65,7 @@ names=()
 for run in baseline:baseline reference:reference reference:reference-rerun candidate:candidate; do
   install=${run%%:*} name=${run#*:}
   names+=("kit-cmp-$name-$$")
-  docker run -d --name "kit-cmp-$name-$$" --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$out":/work kit-qualification \
+  docker run -d "${platform_args[@]+"${platform_args[@]}"}" --name "kit-cmp-$name-$$" --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$out":/work "$image_tag" \
     sh -c "node qualification/run.mjs install-$install/node_modules/@deepseek-ai/libreoffice-kit fixtures sets/$name > logs-$name.txt 2>&1" >/dev/null
 done
 failed=0
@@ -63,7 +83,7 @@ qrun python3 qualification/compare.py sets/reference sets/baseline reports/basel
 
 harness_commit=$(git -C "$repo" rev-parse HEAD)
 harness_dirty=$([ -z "$(git -C "$repo" status --porcelain -- qualification scripts/verify-reconstruction.mjs)" ] && echo false || echo true)
-qrun env IMAGE="$image" COMMIT="$harness_commit" DIRTY="$harness_dirty" python3 - <<'PY'
+qrun env IMAGE="$image" PLATFORM="$platform" COMMIT="$harness_commit" DIRTY="$harness_dirty" python3 - <<'PY'
 import hashlib, json, os, platform, subprocess, datetime
 sha = lambda p: hashlib.sha256(open(p, 'rb').read()).hexdigest()
 def tree(root):
@@ -74,7 +94,7 @@ env = {
     'recorded': datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds'),
     'harness': {'repository': 'magda-io/dsh-libreoffice-kit', 'commit': os.environ['COMMIT'], 'uncommittedChanges': os.environ['DIRTY'] == 'true'},
     'host': {'machine': platform.machine(), 'kernel': platform.release(), 'node': subprocess.run(['node', '--version'], capture_output=True, text=True).stdout.strip(),
-             'image': os.environ['IMAGE'], 'os': open('/etc/os-release').read().split('PRETTY_NAME="')[1].split('"')[0]},
+             'image': os.environ['IMAGE'], 'requestedPlatform': os.environ['PLATFORM'] or None, 'os': open('/etc/os-release').read().split('PRETTY_NAME="')[1].split('"')[0]},
     'packages': packages, 'installed': installed,
     'fixtures': {'manifestSha256': sha('qualification/fixtures.json'), 'files': tree('fixtures')},
 }

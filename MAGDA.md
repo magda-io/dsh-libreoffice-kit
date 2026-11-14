@@ -111,7 +111,7 @@ runtime tests.
 ## MAGDA deltas
 
 The reconstruction ends at commit
-[`8bdc60f`](https://github.com/magda-io/dsh-libreoffice-kit/commit/8bdc60f1710c986404001ee31bdee0a15f9a56e9).
+[`c20e985`](https://github.com/magda-io/dsh-libreoffice-kit/commit/c20e985b4c653bb885f4d4b7f5754231e4d6de99).
 Every later MAGDA change is a delta recorded in [`MAGDA-DELTAS.json`](MAGDA-DELTAS.json), with
 the files it changes. `pnpm run verify:magda` (also in CI):
 

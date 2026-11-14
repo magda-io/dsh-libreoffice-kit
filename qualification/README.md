@@ -1,13 +1,28 @@
 # Functional qualification
 
 These scripts check that a LibreOffice Kit release built from this branch behaves like the
-official `@deepseek-ai/libreoffice-kit@0.1.5` npm packages. The **MAGDA qualification**
-workflow (`.github/workflows/magda-qualification.yml`) runs them by manual dispatch, with the
-release tag as input, on Linux x64 and arm64.
+official `@deepseek-ai/libreoffice-kit@0.1.5` npm packages. Run them by hand on any Docker host:
+
+```sh
+qualification/download-release.sh v0.1.5-magda.1 candidate   # needs gh; drafts need write access
+qualification/run-comparison.sh candidate evidence
+```
+
+The **MAGDA qualification** workflow (`.github/workflows/magda-qualification.yml`) is a thin
+wrapper around those two scripts. You dispatch it manually with a release tag, and it runs them
+on native GitHub `ubuntu-24.04` (x64) and `ubuntu-24.04-arm` runners, with one shared fixture
+set. It then compares the two architectures' results; that comparison is reported, not
+required. Each architecture's evidence is kept as a workflow artifact for 90 days. Commit it
+under `evidence/` to keep it for good.
+
+`run-comparison.sh --platform linux/amd64` runs the image under emulation, for example on an
+arm64 Mac. That's a convenience check, not qualification of the platform; qualify on a native
+host. `--fixtures <dir>` reuses a fixture directory.
 
 | File                                  | Purpose                                                                                                                                                                                                                                                                               |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `fixtures.json`, `fetch-fixtures.mjs` | Downloads fixtures from pinned commits and verifies each SHA-256: 36 LibreOffice Core QA documents (6 each of DOC, DOCX, XLS, XLSX, PPT and PPTX) and MAGDA's Office fixtures. It also generates right-to-left, CJK, missing-font and long documents (`generate_edge_fixtures.py`).   |
+| `download-release.sh`                 | Downloads a release's tarballs and `SHA256SUMS` by tag and verifies them                                                                                                                                                                                                              |
 | `packages.mjs`                        | Downloads the official 0.1.5 tarballs (pinned sha512), or verifies a release's tarballs against its `SHA256SUMS`                                                                                                                                                                      |
 | `run.mjs`                             | Runs one installation over the fixtures: the DSH Web preview API (`createConverter` → `render` → `dispose`), the CLI (`capabilities`, `render`, `convert`, `recalculate`), errors, limits and cancellation                                                                            |
 | `compare.py`                          | Compares two result sets case by case                                                                                                                                                                                                                                                 |
@@ -24,7 +39,7 @@ match, and rendered PNG pixels are identical. It ignores two things:
 
 ## Reproducing the full comparison and its evidence
 
-`qualification/run-comparison.sh <candidate dir> <output dir>` reproduces the full comparison
+`qualification/run-comparison.sh [--platform <os/arch>] [--fixtures <dir>] <candidate dir> <output dir>` reproduces the full comparison
 with nothing but Docker on the host. `<candidate dir>` holds a release's two `.tgz` files and
 its `SHA256SUMS`. The script runs four sets concurrently over the same fixture files:
 

@@ -1,5 +1,5 @@
 {
-  "reconstruction": "8bdc60f1710c986404001ee31bdee0a15f9a56e9",
+  "reconstruction": "c20e985b4c653bb885f4d4b7f5754231e4d6de99",
   "description": "MAGDA changes after the verified 0.1.5 reconstruction. scripts/verify-magda-deltas.mjs requires every file changed since the reconstruction commit to be listed here, and reruns the reconstruction gate at that commit.",
   "deltas": [
     {
