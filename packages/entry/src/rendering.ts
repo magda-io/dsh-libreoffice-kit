@@ -6,6 +6,18 @@ export interface EnginePage { readonly width: number; readonly height: number; r
 export interface TileRequest { readonly pageIndex: number; readonly x: number; readonly y: number; readonly width: number; readonly height: number; readonly scale: number }
 export interface RasterTile { readonly width: number; readonly height: number; readonly rgba: Uint8ClampedArray }
 
+/** Undo Calc's RTL transport mirroring so saved pixels contain readable text and right-to-left columns. */
+export function unmirrorRtlTile({ width, height, rgba }: RasterTile): void {
+  for (let y = 0; y < height; y++) for (let x = 0; x < Math.floor(width / 2); x++) {
+    const left = (y * width + x) * 4, right = (y * width + width - 1 - x) * 4
+    for (let channel = 0; channel < 4; channel++) {
+      const value = rgba[left + channel]!
+      rgba[left + channel] = rgba[right + channel]!
+      rgba[right + channel] = value
+    }
+  }
+}
+
 /** Split a region on its output-pixel grid, bounding the plan before allocating it. */
 export function splitRasterRectangle(rectangle: Rectangle, scale: number,
   limits: { readonly maxPixels: number; readonly maxDimension: number; readonly maxTiles: number }): Rectangle[] {

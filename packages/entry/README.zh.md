@@ -43,7 +43,7 @@ try {
 
 长驻服务如果需要为多个并发转换槽提供一个显式生命周期所有者，可创建 `createConverterFactory(options)`，再通过 `factory.create()` 建立转换器。这些转换器使用 factory 私有缓存，同时仍分别拥有 Worker、原生 helper、配置目录和输出。释放 factory 会停止并等待它创建的全部转换器。
 
-`convert()` 按输出后缀导出格式，`recalculate()` 在保存前刷新电子表格公式结果，`renderImages()` 在全新目录中写入 PNG tile 和 `manifest.json`。Office 图像直接从一次加载的模型绘制，PDF 使用 PDFium。CLI 通过 `dsoffice capabilities|convert|recalculate|render` 提供相同行为。
+`convert()` 按输出后缀导出格式，`recalculate()` 在保存前刷新电子表格公式结果，`renderImages()` 在全新目录中写入 PNG tile 和 `manifest.json`。Office 图像直接从一次加载的模型绘制，PDF 使用 PDFium。CLI 通过 `dsoffice capabilities|convert|recalculate|render` 提供相同行为。工作表名称按精确名称匹配：图像渲染指定不存在的工作表时返回 `invalid-document`，CSV 导出返回 `failed`，两者均不保留输出。重算作用于整个工作簿并拒绝 `--sheet`。选择失败后仍可复用转换器。
 
 ```sh
 npm exec -- dsoffice render --input report.docx --output-dir report-pages --pages 1
@@ -52,7 +52,13 @@ npm exec -- dsoffice convert --input report.docx --output report.pdf
 npm exec -- dsoffice recalculate --input budget.xlsx --output recalculated.xlsx
 ```
 
+从右向左排列的工作表会生成文字可正常阅读、A 列位于右侧的 PNG。A1 范围和 manifest 中的矩形仍使用逻辑列坐标；拆分后的每张 tile 均独立调整像素方向。
+
 转换 worker 以空的 `execArgv` 运行包内发布的 JavaScript；`--input-type=module` 之类的调用方启动参数不会被继承。
+
+Windows 原生 helper 使用匿名标准输入输出管道，继承调用方的令牌和 Job 限制。helper 等待命令时，管道轮询不会占用 libuv 工作线程。取消及工作表选择失败均会等待进程退出和管道关闭，包括协议读取器已暂停 stdout 的情况；此传输方式不授予额外的文件系统或网络权限。
+
+原生转换和图片渲染 helper 设置 `SAL_DISABLE_PRINTERLIST=1` 与 `SAL_DISABLE_DEFAULTPRINTER=1`，禁用打印机枚举和默认打印机查询。文档预览和导出不需要实体打印机；这些子进程设置可避免打印机驱动弹窗及网络打印机连接等待，不会修改系统打印机设置。
 
 在 Linux 上，原生子进程会先在所选引擎的 program 目录中查找共享库，然后才查找系统路径。调用方提供的 `LD_LIBRARY_PATH` 和 `LD_PRELOAD` 不会被继承。
 

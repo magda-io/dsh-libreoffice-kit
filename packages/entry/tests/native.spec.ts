@@ -135,6 +135,7 @@ describe('native helper environment', () => {
       'darwin')).toEqual({
       PATH: '/usr/bin', LANG: 'en_US.UTF-8', HOME: '/private/profile', USERPROFILE: '/private/profile',
       TMPDIR: '/private/profile', TMP: '/private/profile', TEMP: '/private/profile',
+      SAL_DISABLE_PRINTERLIST: '1', SAL_DISABLE_DEFAULTPRINTER: '1',
     })
   })
 

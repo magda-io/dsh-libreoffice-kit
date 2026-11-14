@@ -1,6 +1,6 @@
 {
   "name": "@deepseek-ai/libreoffice-kit-workspace",
-  "version": "0.1.3",
+  "version": "0.1.5-magda.1",
   "private": true,
   "type": "module",
   "license": "MPL-2.0",
@@ -22,7 +22,8 @@
     "release:publish": "node scripts/release-publish.mjs",
     "test:adapter": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "typecheck": "tsc -b packages/entry"
+    "typecheck": "tsc -b packages/entry",
+    "verify:reconstruction": "node scripts/verify-reconstruction.mjs"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",

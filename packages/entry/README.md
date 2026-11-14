@@ -41,7 +41,7 @@ Converters created through the compatibility `createConverter(options)` API tran
 
 For a long-lived service that wants one explicit lifecycle owner for concurrent conversion slots, create one `createConverterFactory(options)` and obtain converters through `factory.create()`. Those converters use a factory-private cache while retaining separate Workers, native helpers, profiles, and output ownership. Dispose the factory to stop and join every converter it created.
 
-`convert()` exports the format named by the output suffix, `recalculate()` refreshes spreadsheet formula results before saving, and `renderImages()` writes a fresh directory containing PNG tiles plus `manifest.json`. Office images are painted directly from one loaded model; PDF images use PDFium. The CLI exposes the same operations through `dsoffice capabilities|convert|recalculate|render`.
+`convert()` exports the format named by the output suffix, `recalculate()` refreshes spreadsheet formula results before saving, and `renderImages()` writes a fresh directory containing PNG tiles plus `manifest.json`. Office images are painted directly from one loaded model; PDF images use PDFium. The CLI exposes the same operations through `dsoffice capabilities|convert|recalculate|render`. Worksheet names are exact: a missing image-render selection rejects with `invalid-document`, and a missing CSV selection rejects with `failed`; neither leaves output behind. Recalculation applies to the entire workbook and rejects `--sheet`. A rejected selection leaves the converter available for subsequent operations.
 
 ```sh
 npm exec -- dsoffice render --input report.docx --output-dir report-pages --pages 1
@@ -50,7 +50,13 @@ npm exec -- dsoffice convert --input report.docx --output report.pdf
 npm exec -- dsoffice recalculate --input budget.xlsx --output recalculated.xlsx
 ```
 
+Right-to-left worksheets produce readable PNG text with column A on the right. A1 ranges and manifest rectangles retain logical column coordinates; each split tile is independently oriented for display.
+
 Conversion workers run the package's shipped JavaScript with an empty `execArgv`; consumer launch flags such as `--input-type=module` are not inherited.
+
+Windows native helpers use anonymous stdio pipes and inherit the caller's token and Job restrictions. Pipe polling does not occupy libuv worker threads while a helper waits for commands. Cancellation and rejected worksheet selections wait for process exit and pipe closure, including when the protocol reader has paused stdout; this transport does not grant additional filesystem or network access.
+
+Native conversion and image-rendering helpers disable printer enumeration and default-printer lookup with `SAL_DISABLE_PRINTERLIST=1` and `SAL_DISABLE_DEFAULTPRINTER=1`. Document previews and exports do not need a physical printer; these child-process settings prevent printer-driver dialogs and network-printer connection waits without changing the system's printer settings.
 
 On Windows, an engine executable or program path of 260 or more characters uses a temporary helper copy and a junction to the installed resources inside the private operation directory. Resources stay in their installation, and the junction remains until the helper closes. A renderer that exits before returning a protocol response rejects with its exit status and captured diagnostics.
 

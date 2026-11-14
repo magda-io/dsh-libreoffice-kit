@@ -11,10 +11,13 @@ Native headless installations retain only these `.ui` layouts under
 | `modules/swriter/ui/annotation.ui` | Writer comments in WASM |
 | `svt/ui/scrollbars.ui` | Scrollbar adaptor |
 | `svt/ui/tabbuttons.ui` | Tab bar buttons |
+| `svt/ui/tabbuttonsmirrored.ui` | Right-to-left Calc sheet tabs |
 
 Headless conversion still constructs the Calc/Impress and shared `InterimItemWindow`
 shell views. Writer also loads `annotation.ui` for DOCX comments in WASM. Missing
-required layouts can fail document loading or make `VclBuilder` abort. The
+required layouts can fail document loading or make `VclBuilder` abort. RTL sheets
+construct mirrored tab controls even during headless conversion and recalculation.
+The
 shared [policy](../engine/ui-resource-policy.mjs) checks their presence. Native
 packaging removes every other `.ui` file below this root. It does not remove other
 file types or layouts outside this root. Existing toolbar, menubar and image policies still apply.
@@ -32,8 +35,10 @@ The initial five-layout policy omitted Writer comments. A real-engine test on
 2026-09-17 confirmed that a standard commented DOCX loaded with the baseline WASM
 image, failed with the five-layout image, and loaded again after restoring only
 `annotation.ui` (11,021 bytes). The baseline and restored PDF rendered identically.
-The shared policy therefore retains six layouts, the union required by native and
-WASM conversion. `test/runtime-engine.test.mjs` includes a generated commented DOCX
+The policy additionally retains mirrored tab controls: a seeded RTL XLSX failed
+to open with the published native engine and succeeded after restoring only
+`tabbuttonsmirrored.ui`. `test/runtime-cli-fuzz.test.mjs` covers RTL workbooks in
+conversion, rendering and recalculation. `test/runtime-engine.test.mjs` includes a generated commented DOCX
 in installed-engine checks; it runs when `LIBREOFFICE_RUNTIME_ENTRY` is set.
 
 The conversion-only six-layout policy was checked locally on 2026-09-17 against
@@ -77,7 +82,7 @@ Use a complete installation from the new Core build and a matching-host native
 engine package. A previously pruned package alone cannot reveal new dependencies.
 The package's helper, installation and `--ui-source` must come from the same build.
 Use text-bearing fixtures covering all six formats, standard DOCX comments,
-multilingual text and large reports. Install Python 3, Node and Poppler (`pdftotext`)
+multilingual text, right-to-left worksheets and large reports. Install Python 3, Node and Poppler (`pdftotext`)
 on the qualification host.
 
 ```sh

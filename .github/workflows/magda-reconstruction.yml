@@ -1,0 +1,31 @@
+# MAGDA checks for the magda development branch and pull requests. Upstream's release and
+# engine-build workflows are not part of the public tree.
+name: MAGDA reconstruction
+
+on:
+  push:
+    branches: [magda]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22.23.5'
+      - name: Install pnpm from packageManager
+        run: corepack enable && pnpm --version
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run typecheck
+      - run: pnpm run test:adapter
+      - run: pnpm test
+      - name: Compare with the official 0.1.5 npm packages
+        run: pnpm run verify:reconstruction

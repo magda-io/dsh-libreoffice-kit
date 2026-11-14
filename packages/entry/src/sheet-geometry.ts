@@ -77,7 +77,7 @@ function dimension(data: DimensionData, first: number, last: number, maximum: nu
   }
   return [start / scale, (position - start) / scale]
 }
-/** Logical columns advance from A; LOK itself mirrors RTL sheet painting. No manual x inversion. */
+/** Logical columns advance from A; RTL uses the same coordinates and mirrored transport pixels. */
 export function sheetRangeRectangle(geometry: SheetGeometry, range: CellRange, scale: number): Rectangle {
   if (!Number.isFinite(scale) || scale <= 0 || scale > 16) throw new TypeError('Invalid worksheet raster scale.')
   const [x, width] = dimension(geometry.columns, range.firstColumn, range.lastColumn, MAX_COLUMN, scale)

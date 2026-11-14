@@ -187,7 +187,9 @@ test('already published WASM is retained while new native engines and the adapte
     name: `${enginePrefix}-${platform}`, version: platform === 'wasm' ? '0.0.0-retained' : engineVersion(platform), path: `/temporary/${platform}.tgz`, integrity,
   })), { name: kitManifest().name, version: kitManifest().version, path: '/temporary/entry.tgz', integrity }] };
   const writes = [];
-  const result = await publishNpmPackages(publication, { ...quiet, tag: 'latest', run(args) {
+  // A prerelease family version (such as 0.1.5-magda.1) may only use the next dist-tag.
+  const tag = publication.version.includes('-') ? 'next' : 'latest';
+  const result = await publishNpmPackages(publication, { ...quiet, tag, run(args) {
     if (args[0] === 'view') return args[1] === `${enginePrefix}-wasm@0.0.0-retained` ? present() : absent();
     writes.push(args[2]);
     return stageSuccess(args, publication);
