@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import test from 'node:test';
 import { enginePrefix, hostTarget } from '../scripts/platform-matrix.mjs';
 import { sha256 } from '../scripts/verify-artifacts.mjs';
-import { verifyPackedInstall } from '../scripts/verify-packed-install.mjs';
+import { defaultsToWasm, hostChecks, verifyPackedInstall } from '../scripts/verify-packed-install.mjs';
 
 const platform = hostTarget();
 function fixture(t, platforms, packages) {
@@ -32,4 +32,20 @@ test('expecting WASM still verifies the installed native tarball checksum', { sk
   const { directory } = fixture(t, [platform, 'wasm'], ['wasm', platform]);
   writeFileSync(join(directory, `${platform}.tgz`), 'modified native archive');
   assert.throws(() => verifyPackedInstall(directory, { wasmOnly: false, nativeOnly: false, expectedBackend: 'wasm' }), /Tarball checksum mismatch/);
+});
+
+// MAGDA: the verified engine follows the release declaration, which releases only WASM.
+test('hosts without a released native engine verify the WASM engine by default', () => {
+  for (const host of ['darwin-arm64', 'darwin-x64', 'win32-x64', 'win32-arm64', 'linux-x64-glibc', undefined])
+    assert.equal(defaultsToWasm(host, ['wasm']), true, String(host));
+  assert.equal(defaultsToWasm('win32-x64', ['win32-x64', 'wasm']), false);
+  assert.equal(defaultsToWasm('darwin-arm64', ['win32-x64', 'wasm']), true);
+  assert.equal(defaultsToWasm(), true);
+});
+
+test('Windows long-path checks follow the verified engine', () => {
+  assert.deepEqual(hostChecks('win32', true), { longCli: true, longEnginePaths: false });
+  assert.deepEqual(hostChecks('win32', false), { longCli: true, longEnginePaths: true });
+  assert.deepEqual(hostChecks('darwin', false), { longCli: false, longEnginePaths: false });
+  assert.deepEqual(hostChecks('linux', true), { longCli: false, longEnginePaths: false });
 });

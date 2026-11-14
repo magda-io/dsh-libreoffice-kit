@@ -97,7 +97,8 @@ test('publication rejects adapter bytes changed after the conversion receipts', 
 
 test('publication requires embedded graphics evidence from every installed engine', t => {
   const { directory, env, evidence, save } = fixture(t);
-  delete evidence.platforms[0].native.embeddedGraphics;
+  const first = evidence.platforms[0];
+  delete first[first.platform === 'wasm' ? 'wasm' : 'native'].embeddedGraphics;
   save('verification.json', evidence);
   assert.throws(() => validatePublication(directory, env), /Missing embedded PDF graphic/);
 });
@@ -122,7 +123,8 @@ test('publication rejects missing, blank, or PDF-derived Office rendering receip
 
 test('publication rejects partial, duplicate and undeclared development targets', t => {
   const complete = releaseTargets([]);
-  for (const platforms of [complete.slice(0, -1), [...complete, ...complete], ['wasm'],
+  // MAGDA's WASM-only declaration makes ['wasm'] complete, so that case applies only to native releases.
+  for (const platforms of [complete.slice(0, -1), [...complete, ...complete], ...(complete.length > 1 ? [['wasm']] : []),
     [...complete, 'linux-x64-glibc'], [...complete, 'darwin-arm64']]) {
     const { directory, env } = fixture(t, platforms);
     assert.throws(() => validatePublication(directory, env), /every declared release platform/);
@@ -157,10 +159,12 @@ test('publication rejects a transfer size that differs from the pinned archive',
 
 test('publication requires the canonical engine order and matching package versions', t => {
   const { directory, env, release, save } = fixture(t);
-  release.packages.reverse();
-  save('release.json', release);
-  assert.throws(() => validatePublication(directory, env), /package order/);
-  release.packages.reverse();
+  if (release.packages.length > 1) { // A single-engine (MAGDA WASM-only) release has no order to violate.
+    release.packages.reverse();
+    save('release.json', release);
+    assert.throws(() => validatePublication(directory, env), /package order/);
+    release.packages.reverse();
+  }
   release.packages[0].version = '99.0.0';
   release.packages[0].file = engineArchiveName(release.packages[0]);
   release.packages[0].install.file = release.packages[0].file.replace(/\.xz$/, '');
@@ -171,7 +175,7 @@ test('publication requires the canonical engine order and matching package versi
 test('publication rejects noncanonical filenames, platform identities and family versions', t => {
   const { directory, env, release, save } = fixture(t);
   const first = { ...release.packages[0] };
-  for (const change of [{ file: '../different.tgz' }, { platform: 'wasm' }]) {
+  for (const change of [{ file: '../different.tgz' }, { platform: first.platform === 'wasm' ? 'darwin-arm64' : 'wasm' }]) {
     release.packages[0] = { ...first, ...change };
     save('release.json', release);
     assert.throws(() => validatePublication(directory, env), /canonical engine asset|transfer filename/);

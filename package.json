@@ -23,7 +23,8 @@
     "test:adapter": "vitest run",
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc -b packages/entry",
-    "verify:reconstruction": "node scripts/verify-reconstruction.mjs"
+    "verify:reconstruction": "node scripts/verify-reconstruction.mjs",
+    "verify:magda": "node scripts/verify-magda-deltas.mjs"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",

@@ -1,12 +1,13 @@
 /** A receipt is emitted only after the host's installed engine converts. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { verifyPackedInstall } from './verify-packed-install.mjs';
+import { defaultsToWasm, verifyPackedInstall } from './verify-packed-install.mjs';
 import { hostTarget } from './platform-matrix.mjs';
 import { assert, sha256 } from './verify-artifacts.mjs';
 
 const directory = resolve(process.argv[2]);
-const platform = process.argv.includes('--wasm-only') ? 'wasm' : hostTarget();
+// MAGDA: without --wasm-only, the engine follows the release declaration, not just the host.
+const platform = process.argv.includes('--wasm-only') || defaultsToWasm() ? 'wasm' : hostTarget();
 assert(platform, 'This host has no declared native target');
 const sourceCommit = process.env.GITHUB_SHA;
 assert(/^[a-f0-9]{40}$/.test(sourceCommit ?? ''), 'GITHUB_SHA must identify the candidate source commit');

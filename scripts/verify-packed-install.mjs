@@ -7,7 +7,7 @@ import { npm, npmEnvironment, pnpm, run } from './pack-utils.mjs';
 import { assert, sha256, verifyEnginePackage } from './verify-artifacts.mjs';
 import { auditMacOS } from './audit-macos.mjs';
 import { verifyKitPackage } from './verify-kit.mjs';
-import { hostTarget, isMain, kitDirectory, readJson, root, tarballName } from './platform-matrix.mjs';
+import { hostTarget, isMain, kitDirectory, readJson, releaseTargets, root, tarballName } from './platform-matrix.mjs';
 import { materializeEngineArchive } from './engine-archive.mjs';
 import { assertRenderingEvidence } from './rendering-evidence.mjs';
 
@@ -36,12 +36,33 @@ export function packAdapter(directory, work) {
   return { manifest, file };
 }
 
+/**
+ * MAGDA: the default engine follows the release declaration. A host whose native engine is not
+ * released (every host, for MAGDA's WASM-only release) verifies the WASM engine.
+ * @param host - Native target of this host, if any.
+ * @param released - Released platforms, native targets followed by `wasm`.
+ * @returns whether the WASM engine is the host's engine.
+ */
+export function defaultsToWasm(host = hostTarget(), released = releaseTargets([])) {
+  return !(host && released.includes(host));
+}
+
+/**
+ * Windows checks: the long-install-path CLI smoke runs for either engine; the long-path engine
+ * directory check needs an installed native engine.
+ * @param platform - Node.js platform name.
+ * @param wasmOnly - Whether only the WASM engine is installed.
+ * @returns the Windows-specific checks to run.
+ */
+export function hostChecks(platform = process.platform, wasmOnly = false) {
+  return { longCli: platform === 'win32', longEnginePaths: platform === 'win32' && !wasmOnly };
+}
+
 /** Qualify the host engine; Linux development rehearsals may explicitly retain both engines. */
 export function verifyPackedInstall(directory, options = {}) {
-  const wasmOnly = options.wasmOnly ?? (!options.nativeOnly && process.platform === 'linux');
+  const wasmOnly = options.wasmOnly ?? (!options.nativeOnly && defaultsToWasm());
   const { nativeOnly = !wasmOnly, expectedBackend = wasmOnly ? 'wasm' : 'native', keep } = options;
   assert(!(wasmOnly && nativeOnly), 'wasmOnly and nativeOnly are mutually exclusive');
-  assert(!wasmOnly || process.platform === 'linux', 'WASM installation is supported only on Linux');
   if (keep) assert(!existsSync(keep), `Retained installation destination already exists: ${keep}`);
   const release = readJson(join(directory, 'release.json'));
   assert(release.schemaVersion === 1, 'Unsupported release manifest');
@@ -84,17 +105,18 @@ export function verifyPackedInstall(directory, options = {}) {
         ...(process.env.LIBREOFFICE_RENDER_ARTIFACTS ? { LIBREOFFICE_RENDER_ARTIFACTS: resolve(process.env.LIBREOFFICE_RENDER_ARTIFACTS) } : {}) }, timeout: 720_000 });
     const result = readJson(join(consumer, 'smoke-result.json'));
     let windowsLongCli;
-    if (process.platform === 'win32') {
+    const windows = hostChecks(process.platform, wasmOnly);
+    if (windows.longCli) {
       const longConsumer = join(work, 'long-install', 'a'.repeat(80), 'b'.repeat(80), 'c'.repeat(80));
       mkdirSync(dirname(longConsumer), { recursive: true });
       cpSync(consumer, longConsumer, { recursive: true });
       const receipt = join(work, 'long-cli.json');
-      run(process.execPath, [join(root, 'scripts/smoke-installed-cli.mjs'), longConsumer, join(work, 'long-cli-images'), receipt],
+      run(process.execPath, [join(root, 'scripts/smoke-installed-cli.mjs'), longConsumer, join(work, 'long-cli-images'), receipt, expectedBackend],
         { cwd: consumer, timeout: 360_000, env: { ...process.env, NODE_PATH: '', NODE_OPTIONS: '' } });
       windowsLongCli = readJson(receipt);
-      assertRenderingEvidence(windowsLongCli, 'native');
+      assertRenderingEvidence(windowsLongCli, expectedBackend);
     }
-    const windowsLongPaths = process.platform === 'win32' ? JSON.parse(run(process.execPath,
+    const windowsLongPaths = windows.longEnginePaths ? JSON.parse(run(process.execPath,
       [join(root, 'scripts/verify-windows-long-paths.mjs'), join(consumer, 'node_modules', '@deepseek-ai', `libreoffice-kit-${platform}`)],
       { timeout: 240_000, env: { ...process.env, NODE_PATH: '', NODE_OPTIONS: '' } })) : undefined;
     assert(result.backend === expectedBackend && result.pdfBytes > 100, 'Installed conversion did not return the expected PDF/backend');
@@ -123,7 +145,7 @@ export function verifyPackedInstall(directory, options = {}) {
     // Record the installed adapter so a receipt proves which build converted.
     const adapterRecord = { name: adapter.manifest.name, version: adapter.manifest.version,
       file: basename(adapter.file), sha256: sha256(adapter.file) };
-    return { ...result, ...(windowsLongPaths ? { windowsLongPaths, windowsLongCli } : {}), ...(macOS ? { macOS } : {}), adapter: adapterRecord, installedOutsideRepository: true, network: 'offline', ...(keep ? { retainedInstallation: keep } : {}) };
+    return { ...result, ...(windowsLongCli ? { windowsLongCli } : {}), ...(windowsLongPaths ? { windowsLongPaths } : {}), ...(macOS ? { macOS } : {}), adapter: adapterRecord, installedOutsideRepository: true, network: 'offline', ...(keep ? { retainedInstallation: keep } : {}) };
   } finally { rmSync(work, { recursive: true, force: true, maxRetries: 3 }); }
 }
 

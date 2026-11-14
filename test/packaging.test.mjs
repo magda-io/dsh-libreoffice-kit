@@ -79,13 +79,14 @@ test('adapter packages retain the license and notices', (t) => {
   assert.equal(verifyKitPackage(directory).name, kitManifest().name);
 });
 
-test('the release declares macOS and Windows on ARM64/x64, and WASM while other recipes remain available for development', () => {
+// MAGDA: the adapter declares only the WASM engine; native recipes remain available for development.
+test('the release declares the WASM engine while native recipes remain available for development', () => {
   const matrix = packageMatrix();
   assert.equal(matrix.length, 7);
   for (const row of matrix) verifyEngineMetadata(row.manifest, row.prebuild);
   const manifest = kitManifest();
   verifyKitMetadata(manifest);
-  assert.deepEqual(kitNativeTargets(manifest), ['darwin-arm64', 'darwin-x64', 'win32-arm64', 'win32-x64']);
+  assert.deepEqual(kitNativeTargets(manifest), []);
   const missingWasm = structuredClone(manifest);
   delete missingWasm.optionalDependencies[wasmName];
   assert.throws(() => verifyKitMetadata(missingWasm), /Optional dependency matrix/);
@@ -103,7 +104,7 @@ test('the installed adapter preserves the canonical optional list and pins prepa
   for (const name of ['fflate', 'fontkit', 'saxes']) assert.equal(manifest.dependencies[name], source.dependencies[name]);
   verifyKitMetadata(manifest, true);
   const missing = structuredClone(manifest);
-  delete missing.optionalDependencies[`${enginePrefix}-darwin-arm64`];
+  delete missing.optionalDependencies[wasmName];
   assert.throws(() => verifyKitMetadata(missing, true), /Optional dependency matrix/);
   const extra = structuredClone(manifest);
   extra.optionalDependencies[`${enginePrefix}-linux-x64-glibc`] = engineFamilyVersion();
@@ -121,7 +122,7 @@ test('adapter engine declarations reject unknown native packages and mismatched 
   invalidSource.optionalDependencies[`${enginePrefix}-darwin-arm64`] = engineFamilyVersion();
   assert.throws(() => verifyKitMetadata(invalidSource), /declared platform version/);
   const invalidPacked = packedAdapterManifest(source);
-  invalidPacked.optionalDependencies[`${enginePrefix}-darwin-arm64`] = '0.0.0';
+  invalidPacked.optionalDependencies[wasmName] = '0.0.0';
   assert.throws(() => verifyKitMetadata(invalidPacked, true, kitNativeTargets(source)), /declared platform version/);
   const requiredWasm = packedAdapterManifest(source);
   requiredWasm.dependencies[wasmName] = engineFamilyVersion();
@@ -209,7 +210,9 @@ test('native manifest rejects OS, CPU, libc, path and receipt mismatches', () =>
   const built = unbuilt(); built.status = 'built';
   assert.throws(() => verifyEngineMetadata(row.manifest, built), /requires source/);
   const wasm = packageMatrix().find((entry) => entry.prebuild.platform === 'wasm');
-  assert.throws(() => verifyEngineMetadata({ ...wasm.manifest, os: undefined }, wasm.prebuild), /only on Linux/);
+  // MAGDA: the WASM engine installs on every OS; an OS restriction is rejected.
+  assert.throws(() => verifyEngineMetadata({ ...wasm.manifest, os: ['linux'] }, wasm.prebuild), /every OS/);
+  assert.doesNotThrow(() => verifyEngineMetadata(wasm.manifest, wasm.prebuild));
 });
 
 test('glibc minima are optional for old receipts and valid only on glibc targets', () => {

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { enginePrefix, hostTarget, kitManifest, kitNativeTargets, releaseTargets, targets } from '../scripts/platform-matrix.mjs';
+import { enginePrefix, hostTarget, kitManifest, kitNativeTargets, releaseTag, releaseTargets, targets } from '../scripts/platform-matrix.mjs';
 import { githubMatrix } from '../scripts/github-matrix.mjs';
 
 test('platform matrix preserves libc rather than guessing glibc', () => {
@@ -14,7 +14,8 @@ test('platform matrix preserves libc rather than guessing glibc', () => {
 });
 
 test('release selection follows the adapter while explicit development scopes can select every recipe', () => {
-  assert.deepEqual(releaseTargets([]), ['darwin-arm64', 'darwin-x64', 'win32-arm64', 'win32-x64', 'wasm']);
+  // MAGDA releases the WASM engine only; native recipes stay selectable for development.
+  assert.deepEqual(releaseTargets([]), ['wasm']);
   const adapter = structuredClone(kitManifest());
   adapter.optionalDependencies = { [`${enginePrefix}-linux-x64-glibc`]: 'workspace:*' };
   assert.deepEqual(releaseTargets([], kitNativeTargets(adapter)), ['linux-x64-glibc', 'wasm']);
@@ -30,7 +31,7 @@ test('CI build selection retains unfinished recipes while publication selects re
   assert.deepEqual(githubMatrix().include.map(row => row.platform).sort(), [...Object.keys(targets), 'wasm'].sort());
   assert.equal(githubMatrix(['--native-only']).include.length, 6);
   assert.deepEqual(githubMatrix(['--released-only']).include.map(row => row.platform).sort(), releaseTargets([]).sort());
-  assert.deepEqual(githubMatrix(['--released-only', '--native-only']).include.map(row => row.platform), ['darwin-arm64', 'darwin-x64', 'win32-arm64', 'win32-x64']);
+  assert.deepEqual(githubMatrix(['--released-only', '--native-only']).include.map(row => row.platform), []);
 });
 
 test('removed musl targets cannot enter development or release selection', () => {
@@ -40,4 +41,10 @@ test('removed musl targets cannot enter development or release selection', () =>
     adapter.optionalDependencies = { [`${enginePrefix}-${platform}`]: 'workspace:*' };
     assert.throws(() => kitNativeTargets(adapter), /Unknown native optional dependency/);
   }
+});
+
+// MAGDA: releases are tagged v<version> on the magda branch.
+test('release tags take the form v<version>', () => {
+  assert.equal(releaseTag('0.1.5-magda.1'), 'v0.1.5-magda.1');
+  assert.equal(releaseTag(kitManifest().version), `v${kitManifest().version}`);
 });

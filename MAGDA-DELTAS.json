@@ -1,0 +1,53 @@
+{
+  "reconstruction": "c20e985b4c653bb885f4d4b7f5754231e4d6de99",
+  "description": "MAGDA changes after the verified 0.1.5 reconstruction. scripts/verify-magda-deltas.mjs requires every file changed since the reconstruction commit to be listed here, and reruns the reconstruction gate at that commit.",
+  "deltas": [
+    {
+      "id": "delta-gate",
+      "summary": "Verify the reconstruction at its pinned commit and require a declared delta for every later change.",
+      "files": [
+        ".github/workflows/magda-reconstruction.yml",
+        "package.json",
+        "scripts/verify-magda-deltas.mjs"
+      ]
+    },
+    {
+      "id": "wasm-on-every-os",
+      "summary": "Use the WASM engine on macOS and Windows as well as Linux; the adapter no longer declares upstream's native engine packages, and the WASM package carries no OS restriction.",
+      "files": [
+        ".github/workflows/magda-qualification.yml",
+        "packages/entry/package.json",
+        "packages/entry/src/engine.ts",
+        "packages/entry/tests/engine.spec.ts",
+        "packages/wasm/package.json",
+        "pnpm-lock.yaml",
+        "qualification/README.md",
+        "qualification/fetch-fixtures.mjs",
+        "qualification/smoke.mjs",
+        "scripts/import-qualified-native.mjs",
+        "scripts/prepare-artifacts.mjs",
+        "scripts/smoke-installed-cli.mjs",
+        "scripts/verify-artifacts.mjs",
+        "scripts/verify-packed-install.mjs",
+        "scripts/verify-release-host.mjs",
+        "test/import-qualified-native.test.mjs",
+        "test/packaging.test.mjs",
+        "test/packed-install-options.test.mjs",
+        "test/platform-install.test.mjs",
+        "test/prepare-artifacts.test.mjs",
+        "test/publish-npm-release.test.mjs",
+        "test/release-publish.test.mjs",
+        "test/selection.test.mjs"
+      ]
+    },
+    {
+      "id": "release-tag-format",
+      "summary": "Tag releases v<version> (for example v0.1.5-magda.1) instead of upstream's libreoffice-kit-v<version>.",
+      "files": [
+        "scripts/platform-matrix.mjs",
+        "scripts/verify-release.mjs",
+        "test/selection.test.mjs"
+      ]
+    }
+  ]
+}

@@ -10,8 +10,8 @@ here is not upstream's original source text.
 - **Target:** the behaviour of the official npm packages `@deepseek-ai/libreoffice-kit@0.1.5`
   and `@deepseek-ai/libreoffice-kit-wasm@0.1.5`, the versions DeepSeek Harness 0.2.1-alpha.1
   depends on. Their 0.1.4 and 0.1.5 source has not been published.
-- **Release identity:** `0.1.5-magda.1`, for the adapter and the Linux WASM engine only. It is a
-  semver prerelease, so consumers must pin it exactly.
+- **Release identity:** `0.1.5-magda.1`, for the adapter and the WASM engine only. It is a semver
+  prerelease, so consumers must pin it exactly.
 
 ## Provenance
 
@@ -108,10 +108,32 @@ functional comparison for any release of this repository on Linux x64 and arm64 
 [qualification/README.md](qualification/README.md)). gVisor qualification belongs to MAGDA's
 runtime tests.
 
+## MAGDA deltas
+
+The reconstruction ends at commit
+[`c20e985`](https://github.com/magda-io/dsh-libreoffice-kit/commit/c20e985b4c653bb885f4d4b7f5754231e4d6de99).
+Every later MAGDA change is a delta recorded in [`MAGDA-DELTAS.json`](MAGDA-DELTAS.json), with
+the files it changes. `pnpm run verify:magda` (also in CI):
+
+1. requires that commit to be an ancestor of the branch;
+2. requires every file changed since then to belong to a declared delta (recorded evidence under
+   `qualification/evidence/` is exempt);
+3. reruns the reconstruction gate at that commit, so the byte-identity proof against the official
+   0.1.5 packages still holds.
+
+Merge pull requests into `magda` with merge commits, so the pinned commit stays in the
+branch history.
+
+| Delta                | Change                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `delta-gate`         | The gate described above.                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `wasm-on-every-os`   | The WASM engine is the engine on Linux, macOS and Windows. The adapter declares no native engine packages, so no install fetches upstream's native binaries. The WASM package carries no OS restriction. `qualification/smoke.mjs` checks the engine on each OS. Engine policy: WASM by packaging. The resolver still prefers a compatible native package if one is installed explicitly; MAGDA releases and installs none. |
+| `release-tag-format` | Releases are tagged `v<version>`, for example `v0.1.5-magda.1`, instead of upstream's `libreoffice-kit-v<version>`.                                                                                                                                                                                                                                                                                                         |
+
 ## Not in scope
 
-- **Native engines:** this branch doesn't build or release macOS or Windows engines. The adapter's
-  optional dependencies for those platforms still name upstream's published `0.1.5` packages;
-  Linux installs skip them.
-- **Upstream release tooling:** `scripts/release-*.mjs` and `scripts/publish-npm-release.mjs` are
-  unchanged except for the repository name. MAGDA's release process is defined separately.
+- **Native engines:** this branch doesn't build or release macOS, Windows or Linux native engines.
+  Their recipes and resolution code stay, but the adapter doesn't depend on them.
+- **Upstream release tooling:** `scripts/release-*.mjs` and `scripts/publish-npm-release.mjs` keep
+  upstream's flow; only the repository name and the declared engine set changed. MAGDA's release
+  process is defined separately.

@@ -1,0 +1,566 @@
+{
+  "reference": "0.1.5-magda.1",
+  "candidate": "0.1.5-magda.1",
+  "summary": {
+    "EQUAL": 123
+  },
+  "cases": {
+    "api:cancel": {
+      "verdict": "EQUAL"
+    },
+    "api:max-input-bytes": {
+      "verdict": "EQUAL"
+    },
+    "api:reuse-after-cancel": {
+      "verdict": "EQUAL"
+    },
+    "api:timeout": {
+      "verdict": "EQUAL"
+    },
+    "capabilities": {
+      "verdict": "EQUAL"
+    },
+    "convert:briefing.pdf": {
+      "verdict": "EQUAL"
+    },
+    "convert:budget.csv": {
+      "verdict": "EQUAL"
+    },
+    "convert:missing-sheet.csv": {
+      "verdict": "EQUAL"
+    },
+    "convert:report.odt": {
+      "verdict": "EQUAL"
+    },
+    "convert:report.txt": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-doc-image-comment-at-char.doc": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-doc-n816603.doc": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-doc-tdf106541_cancelOutline.doc": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-doc-tdf123433_fillStyleStop.doc": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-doc-tdf37778_readonlySection.doc": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-doc-tdf89377_tableWithBreakBeforeParaStyle.doc": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-docx-custom-styles-TOC-comma.docx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-docx-fdo64350.docx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-docx-page-break-before.docx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-docx-tdf114308.docx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-docx-tdf148361.docx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-docx-tdf91594.docx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-ppt-tdf119629.ppt": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-ppt-tdf143315-WordartWithoutBullet.ppt": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-ppt-tdf165262.ppt": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-ppt-tdf169705.ppt": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-ppt-tdf49561.ppt": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-ppt-tdf49856.ppt": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-pptx-n821567.pptx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-pptx-tcPr-vert-roundtrip.pptx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-pptx-tdf104015.pptx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-pptx-tdf114913.pptx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-pptx-tdf116350-texteffects.pptx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-pptx-tdf98603.pptx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-xls-cell-multi-line.xls": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-xls-forum-mso-de-48440.xls": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-xls-matrix.xls": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-xls-named-ranges-local.xls": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-xls-pivottable_date_field_filter.xls": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-xls-pivottable_number_grouping.xls": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-xlsx-complex_icon_set.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-xlsx-tdf110440.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-xlsx-tdf112567.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-xlsx-tdf145057.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-xlsx-tdf83671_SmartArt_import.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:core-xlsx-universal-content-strict.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:edge-cjk.docx": {
+      "verdict": "EQUAL"
+    },
+    "preview:edge-long.docx": {
+      "verdict": "EQUAL"
+    },
+    "preview:edge-missing-font.docx": {
+      "verdict": "EQUAL"
+    },
+    "preview:edge-rtl.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-briefing.pptx": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-budget.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-charts.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-document.odt": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-encrypted.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-legacy.doc": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-legacy.xls": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-misnamed-spreadsheet.docx": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-report.docx": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-shared-formulas.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-strict-shared-formulas.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-truncated.docx": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-uncalculated.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "preview:magda-zip-encrypted.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "recalculate:edge-rtl.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "recalculate:magda-legacy.xls": {
+      "verdict": "EQUAL"
+    },
+    "recalculate:magda-shared-formulas.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "recalculate:magda-strict-shared-formulas.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "recalculate:magda-uncalculated.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "render:core-doc-image-comment-at-char.doc": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-doc-n816603.doc": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-doc-tdf106541_cancelOutline.doc": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-doc-tdf123433_fillStyleStop.doc": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-doc-tdf37778_readonlySection.doc": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-doc-tdf89377_tableWithBreakBeforeParaStyle.doc": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-docx-custom-styles-TOC-comma.docx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-docx-fdo64350.docx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-docx-page-break-before.docx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-docx-tdf114308.docx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-docx-tdf148361.docx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-docx-tdf91594.docx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-ppt-tdf119629.ppt": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-ppt-tdf143315-WordartWithoutBullet.ppt": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-ppt-tdf165262.ppt": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-ppt-tdf169705.ppt": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-ppt-tdf49561.ppt": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-ppt-tdf49856.ppt": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-pptx-n821567.pptx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-pptx-tcPr-vert-roundtrip.pptx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-pptx-tdf104015.pptx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-pptx-tdf114913.pptx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-pptx-tdf116350-texteffects.pptx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-pptx-tdf98603.pptx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-xls-cell-multi-line.xls": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-xls-forum-mso-de-48440.xls": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-xls-matrix.xls": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-xls-named-ranges-local.xls": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-xls-pivottable_date_field_filter.xls": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-xls-pivottable_number_grouping.xls": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-xlsx-complex_icon_set.xlsx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-xlsx-tdf110440.xlsx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-xlsx-tdf112567.xlsx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-xlsx-tdf145057.xlsx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-xlsx-tdf83671_SmartArt_import.xlsx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:core-xlsx-universal-content-strict.xlsx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:edge-cjk.docx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:edge-long.docx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:edge-missing-font.docx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:edge-rtl.xlsx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:magda-briefing.pptx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:magda-budget.xlsx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:magda-charts.xlsx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:magda-document.odt": {
+      "verdict": "EQUAL"
+    },
+    "render:magda-encrypted.xlsx": {
+      "verdict": "EQUAL"
+    },
+    "render:magda-legacy.doc": {
+      "verdict": "EQUAL"
+    },
+    "render:magda-legacy.xls": {
+      "verdict": "EQUAL"
+    },
+    "render:magda-misnamed-spreadsheet.docx": {
+      "verdict": "EQUAL"
+    },
+    "render:magda-report.docx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:magda-shared-formulas.xlsx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:magda-strict-shared-formulas.xlsx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:magda-truncated.docx": {
+      "verdict": "EQUAL"
+    },
+    "render:magda-uncalculated.xlsx": {
+      "pixels": {
+        "max_abs": 0,
+        "changed_fraction": 0.0
+      },
+      "verdict": "EQUAL"
+    },
+    "render:magda-zip-encrypted.xlsx": {
+      "verdict": "EQUAL"
+    }
+  }
+}

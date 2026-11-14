@@ -43,7 +43,8 @@ export function kitManifest(repo = root) {
 
 /** Release tags identify this standalone kit family. */
 export function releaseTag(version) {
-  return `libreoffice-kit-v${version}`;
+  // MAGDA: releases are tagged v<version> on the magda branch.
+  return `v${version}`;
 }
 
 /**

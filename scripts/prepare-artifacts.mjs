@@ -30,7 +30,9 @@ export function artifactPlan(selection = '', repo = root) {
   assert(selected.length > 0 && selected.every(value => Object.hasOwn(runtimeTargets, value)), 'Unknown or empty Office runtime target');
   const released = kitNativeTargets(kitManifest(repo));
   const native = selected.map(value => runtimeTargets[value]).filter(value => released.includes(value));
-  return [...new Set(native), ...(selected.some(value => value.startsWith('node24-linux-')) ? ['wasm'] : [])];
+  // MAGDA: a target without a released native engine runs the WASM engine, as resolveEngine selects.
+  const wasm = selected.some(value => value.startsWith('node24-linux-') || !released.includes(runtimeTargets[value]));
+  return [...new Set(native), ...(wasm ? ['wasm'] : [])];
 }
 
 /** Reject different source pins, helpers or patches even when an engine reuses the package version. */
