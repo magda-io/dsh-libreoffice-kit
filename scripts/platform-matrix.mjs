@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 export const root = fileURLToPath(new URL('../', import.meta.url));
 export const enginePrefix = '@deepseek-ai/libreoffice-kit';
 /** Internal repository hosting qualified engine archives for application builds. */
-export const releaseRepository = 'deepseek-harness/libreoffice-kit';
+export const releaseRepository = 'magda-io/dsh-libreoffice-kit';
 /** Repository maintaining the source and Actions builds referenced by release evidence. */
 export const sourceRepository = releaseRepository;
 export const wasmName = `${enginePrefix}-wasm`;

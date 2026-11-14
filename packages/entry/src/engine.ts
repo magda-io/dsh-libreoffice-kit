@@ -7,7 +7,7 @@ import { dirname, isAbsolute, resolve, relative, sep, join } from 'node:path'
 const require = createRequire(import.meta.url)
 
 /** Node API release version returned by runtime discovery. */
-export const ENGINE_VERSION = '0.1.5'
+export const ENGINE_VERSION = '0.1.5-magda.1'
 
 /** Exact compatible engine versions; unchanged platforms retain their published packages. */
 export const ENGINE_VERSIONS: Readonly<Record<string, string>> = Object.freeze({
@@ -17,7 +17,7 @@ export const ENGINE_VERSIONS: Readonly<Record<string, string>> = Object.freeze({
   'linux-x64-glibc': '0.1.1',
   'win32-arm64': '0.1.5',
   'win32-x64': '0.1.5',
-  wasm: '0.1.5',
+  wasm: '0.1.5-magda.1',
 })
 
 /** npm scope and name prefix shared by the engine packages this adapter installs. */

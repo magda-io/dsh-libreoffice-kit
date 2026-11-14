@@ -1,6 +1,6 @@
 {
   "name": "@deepseek-ai/libreoffice-kit-wasm",
-  "version": "0.1.5",
+  "version": "0.1.5-magda.1",
   "type": "module",
   "license": "MPL-2.0",
   "engines": {
@@ -8,10 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/deepseek-ai/dsh-libreoffice-kit",
+    "url": "https://github.com/magda-io/dsh-libreoffice-kit",
     "directory": "packages/wasm"
   },
-  "homepage": "https://github.com/deepseek-ai/dsh-libreoffice-kit",
+  "homepage": "https://github.com/magda-io/dsh-libreoffice-kit",
   "publishConfig": {
     "access": "public"
   },

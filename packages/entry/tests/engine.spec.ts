@@ -59,7 +59,7 @@ describe('engine discovery', () => {
       expect(version).toBe(manifest.version)
     }
     expect(ENGINE_VERSIONS['win32-x64']).toBe('0.1.5')
-    expect(ENGINE_VERSIONS.wasm).toBe('0.1.5')
+    expect(ENGINE_VERSIONS.wasm).toBe('0.1.5-magda.1')
   })
 
   it('selects glibc and rejects unsupported libc or host architectures', () => {
