@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0 # the delta gate needs the reconstruction commit
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '22.23.5'
@@ -28,5 +29,5 @@ jobs:
       - run: pnpm run typecheck
       - run: pnpm run test:adapter
       - run: pnpm test
-      - name: Compare with the official 0.1.5 npm packages
-        run: pnpm run verify:reconstruction
+      - name: Verify the reconstruction commit and the declared MAGDA deltas
+        run: pnpm run verify:magda
