@@ -28,9 +28,9 @@ cp "$repo/package.json" "$out/package.json"
 
 docker build -q -t kit-qualification "$here" >/dev/null
 image=$(docker image inspect -f '{{.Id}}' kit-qualification)
-in() { docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$out":/work kit-qualification "$@"; }
+qrun() { docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$out":/work kit-qualification "$@"; }
 
-in sh -c 'set -e
+qrun sh -c 'set -e
   node qualification/fetch-fixtures.mjs fixtures
   node qualification/packages.mjs reference packages-reference
   node qualification/packages.mjs baseline packages-baseline
@@ -54,16 +54,16 @@ for name in "${names[@]}"; do [ "$(docker wait "$name")" = 0 ] || failed=1; dock
 
 mkdir -p "$out/reports"
 status=0
-in python3 qualification/compare.py sets/reference sets/candidate reports/candidate-vs-reference.json --strict \
+qrun python3 qualification/compare.py sets/reference sets/candidate reports/candidate-vs-reference.json --strict \
   --label 'candidate vs official 0.1.5' --summary reports/summary.md || status=1
-in python3 qualification/compare.py sets/reference sets/reference-rerun reports/reference-rerun-vs-reference.json \
+qrun python3 qualification/compare.py sets/reference sets/reference-rerun reports/reference-rerun-vs-reference.json \
   --label 'official 0.1.5: second run vs first run' --summary reports/summary.md
-in python3 qualification/compare.py sets/reference sets/baseline reports/baseline-vs-reference.json \
+qrun python3 qualification/compare.py sets/reference sets/baseline reports/baseline-vs-reference.json \
   --label 'official 0.1.3 vs official 0.1.5' --summary reports/summary.md
 
 harness_commit=$(git -C "$repo" rev-parse HEAD)
 harness_dirty=$([ -z "$(git -C "$repo" status --porcelain -- qualification scripts/verify-reconstruction.mjs)" ] && echo false || echo true)
-in env IMAGE="$image" COMMIT="$harness_commit" DIRTY="$harness_dirty" python3 - <<'PY'
+qrun env IMAGE="$image" COMMIT="$harness_commit" DIRTY="$harness_dirty" python3 - <<'PY'
 import hashlib, json, os, platform, subprocess, datetime
 sha = lambda p: hashlib.sha256(open(p, 'rb').read()).hexdigest()
 def tree(root):
