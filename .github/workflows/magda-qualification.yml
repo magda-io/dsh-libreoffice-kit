@@ -1,7 +1,9 @@
-# Functional qualification of a LibreOffice Kit release of this repository on Linux x64 and
-# arm64. The engine is not rebuilt here (its full-LTO link needs ~22 GiB): the jobs install the
-# release's adapter and WASM tarballs and the official 0.1.5 npm packages, run the same
-# fixtures through both, and require identical results.
+# Functional qualification of a LibreOffice Kit release of this repository on native Linux x64
+# and arm64 runners. A thin wrapper around the qualification scripts, so a run here produces the
+# same evidence as running them by hand on any Docker host:
+#   qualification/download-release.sh <tag> candidate
+#   qualification/run-comparison.sh --fixtures fixtures candidate evidence
+# The engine is not rebuilt here: its full-LTO link needs ~22 GiB.
 name: MAGDA qualification
 
 on:
@@ -24,7 +26,7 @@ jobs:
         with:
           persist-credentials: false
       - run: docker build -t kit-qualification qualification
-      - name: Download pinned fixtures and generate edge cases
+      - name: Download pinned fixtures and generate edge cases once for both architectures
         run: docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$PWD":/work kit-qualification node qualification/fetch-fixtures.mjs fixtures
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -39,7 +41,6 @@ jobs:
       fail-fast: false
       matrix:
         runner: [ubuntu-24.04, ubuntu-24.04-arm]
-        set: [reference, candidate]
     runs-on: ${{ matrix.runner }}
     permissions:
       # Draft releases, which hold unpublished candidates, are visible only with write access.
@@ -56,43 +57,30 @@ jobs:
         with:
           name: fixtures
           path: fixtures
-      - name: Download the release's tarballs and checksums
-        if: matrix.set == 'candidate'
+      - name: Download and verify the release
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ inputs.release }}
+          RELEASE: ${{ inputs.release }}
+        run: qualification/download-release.sh "$RELEASE" candidate
+      - name: Run the full comparison
+        run: qualification/run-comparison.sh --fixtures fixtures candidate evidence
+      - name: Summary
+        if: always()
         run: |
-          set -euo pipefail
-          release=$(gh api "repos/$GITHUB_REPOSITORY/releases" --paginate --jq ".[] | select(.tag_name == env.TAG) | .id")
-          [ "$(printf '%s\n' "$release" | grep -c .)" = 1 ] || { echo "expected exactly one release tagged $TAG" >&2; exit 1; }
-          mkdir -p packages
-          gh api "repos/$GITHUB_REPOSITORY/releases/$release/assets" --paginate \
-            --jq '.[] | select((.name | endswith(".tgz")) or .name == "SHA256SUMS") | "\(.id) \(.name)"' |
-            while read -r id name; do
-              gh api -H 'Accept: application/octet-stream' "repos/$GITHUB_REPOSITORY/releases/assets/$id" > "packages/$name"
-            done
-      - name: Prepare and verify ${{ matrix.set }} packages
-        run: |
-          node qualification/packages.mjs ${{ matrix.set }} packages
-          { echo "### ${{ runner.arch }} ${{ matrix.set }}"; echo; echo '```'; (cd packages && sha256sum *.tgz); echo '```'; } >> "$GITHUB_STEP_SUMMARY"
-      - run: docker build -t kit-qualification qualification
-      - name: Install and run the fixtures
-        run: |
-          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -v "$PWD":/work kit-qualification sh -c '
-            set -e
-            mkdir -p install && cd install && echo "{\"private\":true}" > package.json
-            npm install --ignore-scripts --no-audit --no-fund --loglevel=error ../packages/*.tgz
-            cd .. && node -p "process.arch + \" \" + process.version"
-            node qualification/run.mjs install/node_modules/@deepseek-ai/libreoffice-kit fixtures out'
+          { echo "## ${{ runner.arch }}"; echo; cat evidence/reports/summary.md 2>/dev/null || echo 'No report.'; echo; echo '```'; (cd candidate && sha256sum *.tgz); echo '```'; } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
         with:
-          name: results-${{ runner.arch }}-${{ matrix.set }}
+          name: evidence-${{ runner.arch }}
           path: |
-            out/results.json
-            out/png
-          retention-days: 14
+            evidence/environment.json
+            evidence/outputs.sha256
+            evidence/reports
+            evidence/sets/*/results.json
+            evidence/comparison-evidence.tar.gz
+          retention-days: 90
 
-  compare:
+  cross-arch:
     needs: qualify
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -102,28 +90,20 @@ jobs:
           persist-credentials: false
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
-          pattern: results-*
-          path: results
+          pattern: evidence-*
+          path: evidence
       - run: docker build -t kit-qualification qualification
-      - name: Release must equal official 0.1.5 on each architecture
+      - name: Compare x64 and arm64 (reported, not required)
         run: |
           set -euo pipefail
+          for arch in X64 ARM64; do mkdir -p "raw/$arch" && tar -C "raw/$arch" -xzf "evidence/evidence-$arch/comparison-evidence.tar.gz"; done
           run() { docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/work kit-qualification python3 qualification/compare.py "$@"; }
-          status=0
-          for arch in X64 ARM64; do
-            run results/results-$arch-reference results/results-$arch-candidate report-$arch.json --strict \
-              --label "$arch: candidate vs official 0.1.5" --summary summary.md || status=1
+          for set in reference candidate; do
+            run raw/X64/sets/$set raw/ARM64/sets/$set cross-arch-$set.json --label "$set: x64 vs arm64" --summary summary.md
           done
-          # Cross-architecture equality is reported, not required.
-          run results/results-X64-reference results/results-ARM64-reference report-reference-x64-arm64.json \
-            --label "official 0.1.5: x64 vs arm64" --summary summary.md
-          run results/results-X64-candidate results/results-ARM64-candidate report-candidate-x64-arm64.json \
-            --label "candidate: x64 vs arm64" --summary summary.md
           cat summary.md >> "$GITHUB_STEP_SUMMARY"
-          exit $status
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        if: always()
         with:
-          name: comparison-reports
-          path: report-*.json
-          retention-days: 30
+          name: cross-arch-reports
+          path: cross-arch-*.json
+          retention-days: 90
