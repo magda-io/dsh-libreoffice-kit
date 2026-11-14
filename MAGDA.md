@@ -97,7 +97,10 @@ official `libreoffice-kit-wasm@0.1.5`.
   per-run session IDs in ODT exports, which also differ between two runs of official 0.1.5.
   Official 0.1.3 differs from 0.1.5 only in the right-to-left worksheet image.
 
-These results come from one arm64 build. MAGDA's release qualification covers amd64 and gVisor.
+These results come from one arm64 build. The **MAGDA qualification** workflow repeats the
+functional comparison for any release of this repository on Linux x64 and arm64 (see
+[qualification/README.md](qualification/README.md)). gVisor qualification belongs to MAGDA's
+runtime tests.
 
 ## Not in scope
 
