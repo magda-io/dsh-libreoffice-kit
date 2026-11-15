@@ -3,7 +3,7 @@
   "cases": {
     "capabilities": {
       "ok": true,
-      "ms": 243,
+      "ms": 176,
       "value": {
         "runtime": {
           "version": "0.1.5",
@@ -112,7 +112,7 @@
     },
     "preview:core-doc-image-comment-at-char.doc": {
       "ok": true,
-      "ms": 5659,
+      "ms": 4835,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "2ce109e9d0faf820b2434e166297934e6177b65ab9951dbc3e204cad4689b39c",
@@ -123,7 +123,7 @@
     },
     "preview:core-doc-n816603.doc": {
       "ok": true,
-      "ms": 7849,
+      "ms": 7411,
       "missingFonts": [],
       "pages": 5,
       "textSha256": "6a6b547cf209409bf7e758daf97e41dcfd4c4f015f9fafb957e2e7676dd987c3",
@@ -134,7 +134,7 @@
     },
     "preview:core-doc-tdf106541_cancelOutline.doc": {
       "ok": true,
-      "ms": 7081,
+      "ms": 5112,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "41012e716c68d87d997bc07ffe5a26f2e247a837d91b07496eda06614032d6b7",
@@ -146,7 +146,7 @@
     },
     "preview:core-doc-tdf123433_fillStyleStop.doc": {
       "ok": true,
-      "ms": 6989,
+      "ms": 6633,
       "missingFonts": [],
       "pages": 3,
       "textSha256": "3fe4c1caeae8d41de6ecf79b966a8cd51e8a9b145c41173e04eab2f19919477f",
@@ -158,7 +158,7 @@
     },
     "preview:core-doc-tdf37778_readonlySection.doc": {
       "ok": true,
-      "ms": 6854,
+      "ms": 5275,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "35072a10acdc49cbb1184097f33be07c492803b6057f76cb3cee81b7e0b9b26b",
@@ -169,7 +169,7 @@
     },
     "preview:core-doc-tdf89377_tableWithBreakBeforeParaStyle.doc": {
       "ok": true,
-      "ms": 7041,
+      "ms": 5892,
       "missingFonts": [],
       "pages": 2,
       "textSha256": "7bf1c401f8c5ab13d1aa68e8ec537330221944948e23067c8b4f30a4adbd97f3",
@@ -180,7 +180,7 @@
     },
     "preview:core-docx-custom-styles-TOC-comma.docx": {
       "ok": true,
-      "ms": 8906,
+      "ms": 7078,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "6d9407e213d5297ae998d444648f3f4b2b9114ee4dabd4e03d9f6c2fe688acd0",
@@ -191,7 +191,7 @@
     },
     "preview:core-docx-fdo64350.docx": {
       "ok": true,
-      "ms": 7298,
+      "ms": 7071,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -200,7 +200,7 @@
     },
     "preview:core-docx-page-break-before.docx": {
       "ok": true,
-      "ms": 5721,
+      "ms": 4546,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "10cfe4aedc7bc6c37572a17626b6edb86ff1ed23dacebda136caccf4222ffa51",
@@ -211,7 +211,7 @@
     },
     "preview:core-docx-tdf114308.docx": {
       "ok": true,
-      "ms": 8584,
+      "ms": 7046,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -220,7 +220,7 @@
     },
     "preview:core-docx-tdf148361.docx": {
       "ok": true,
-      "ms": 6264,
+      "ms": 5467,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "6fe78315e95e5fb777ee8cd5a98b51d05c1a21396e28eb35d4af45476a0d9782",
@@ -231,7 +231,7 @@
     },
     "preview:core-docx-tdf91594.docx": {
       "ok": true,
-      "ms": 7742,
+      "ms": 7741,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "107ea32b2d86b63bda2d88ab8271b9a1a9d0efb7a38211d3d962de7ac93b4c93",
@@ -244,7 +244,7 @@
     },
     "preview:core-ppt-tdf119629.ppt": {
       "ok": true,
-      "ms": 9638,
+      "ms": 8084,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "cf664d98499f0979c78b639505a336deec9faa7e130cda7a97dd097afb4a7a89",
@@ -256,7 +256,7 @@
     },
     "preview:core-ppt-tdf143315-WordartWithoutBullet.ppt": {
       "ok": true,
-      "ms": 8111,
+      "ms": 6977,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -265,7 +265,7 @@
     },
     "preview:core-ppt-tdf165262.ppt": {
       "ok": true,
-      "ms": 6047,
+      "ms": 5534,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "098d7324b40bcb494bdaee56dfdd992d2e1b3a90842f45fc3e251e109896291b",
@@ -276,7 +276,7 @@
     },
     "preview:core-ppt-tdf169705.ppt": {
       "ok": true,
-      "ms": 9818,
+      "ms": 8702,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "93375fda76980cc9101260c3b19e5e385f8788b78101b6f920aa455bc0f59e43",
@@ -290,7 +290,7 @@
     },
     "preview:core-ppt-tdf49561.ppt": {
       "ok": true,
-      "ms": 8303,
+      "ms": 7372,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "e70b5eae712e22f4a5c47fbbd2a026451d4a8e781d93aa3150b94fa87f28a8ff",
@@ -302,7 +302,7 @@
     },
     "preview:core-ppt-tdf49856.ppt": {
       "ok": true,
-      "ms": 9411,
+      "ms": 6637,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "37df4e29d0b1d1e85215e2ea166fc86c2bff5e8c55253e4d16b67e7f4be91fe4",
@@ -314,7 +314,7 @@
     },
     "preview:core-pptx-n821567.pptx": {
       "ok": true,
-      "ms": 10156,
+      "ms": 7587,
       "missingFonts": [
         "Arial"
       ],
@@ -325,7 +325,7 @@
     },
     "preview:core-pptx-tcPr-vert-roundtrip.pptx": {
       "ok": true,
-      "ms": 9361,
+      "ms": 6907,
       "missingFonts": [
         "Arial"
       ],
@@ -339,7 +339,7 @@
     },
     "preview:core-pptx-tdf104015.pptx": {
       "ok": true,
-      "ms": 9152,
+      "ms": 6756,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -348,7 +348,7 @@
     },
     "preview:core-pptx-tdf114913.pptx": {
       "ok": true,
-      "ms": 8287,
+      "ms": 7197,
       "missingFonts": [
         "Arial"
       ],
@@ -361,7 +361,7 @@
     },
     "preview:core-pptx-tdf116350-texteffects.pptx": {
       "ok": true,
-      "ms": 11031,
+      "ms": 8278,
       "missingFonts": [
         "Arial"
       ],
@@ -372,7 +372,7 @@
     },
     "preview:core-pptx-tdf98603.pptx": {
       "ok": true,
-      "ms": 8140,
+      "ms": 7340,
       "missingFonts": [
         "Arial",
         "FrankRuehl"
@@ -387,7 +387,7 @@
     },
     "preview:core-xls-cell-multi-line.xls": {
       "ok": true,
-      "ms": 7617,
+      "ms": 6580,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "0f3d311d5827ee7159aacf8fe02b468bb723f1cae188b047e13464435c6fb1bb",
@@ -398,7 +398,7 @@
     },
     "preview:core-xls-forum-mso-de-48440.xls": {
       "ok": true,
-      "ms": 9345,
+      "ms": 8152,
       "missingFonts": [],
       "pages": 2,
       "textSha256": "c0d9f79deda95b100abada18a20cf6dc3e744ce8dcf55cefc76f93334a2f8ef8",
@@ -411,7 +411,7 @@
     },
     "preview:core-xls-matrix.xls": {
       "ok": true,
-      "ms": 7629,
+      "ms": 6642,
       "missingFonts": [],
       "pages": 10,
       "textSha256": "6ebc941de915dca25ee18fa1c21b4fb2e72b4a4240ef9be9812b8703907c9af2",
@@ -422,7 +422,7 @@
     },
     "preview:core-xls-named-ranges-local.xls": {
       "ok": true,
-      "ms": 6970,
+      "ms": 6741,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "f9a4181f59df849aafd3b56dfc149d3d8a486a08c522aedca87f73ea1264c17d",
@@ -434,7 +434,7 @@
     },
     "preview:core-xls-pivottable_date_field_filter.xls": {
       "ok": true,
-      "ms": 7559,
+      "ms": 6545,
       "missingFonts": [],
       "pages": 3,
       "textSha256": "97ac585c58d33ad49e0128d7bdbfd003360478e2a201c8588039b9b8b1df5e8f",
@@ -446,7 +446,7 @@
     },
     "preview:core-xls-pivottable_number_grouping.xls": {
       "ok": true,
-      "ms": 6978,
+      "ms": 6380,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "974965826da2d9da277e9f4a16555e6cdda29ddcbe81bc4bbe54cce3a6732d61",
@@ -457,7 +457,7 @@
     },
     "preview:core-xlsx-complex_icon_set.xlsx": {
       "ok": true,
-      "ms": 8042,
+      "ms": 6695,
       "missingFonts": [
         "Calibri"
       ],
@@ -470,7 +470,7 @@
     },
     "preview:core-xlsx-tdf110440.xlsx": {
       "ok": true,
-      "ms": 8435,
+      "ms": 6527,
       "missingFonts": [
         "Calibri"
       ],
@@ -483,7 +483,7 @@
     },
     "preview:core-xlsx-tdf112567.xlsx": {
       "ok": true,
-      "ms": 8396,
+      "ms": 5922,
       "missingFonts": [
         "Calibri"
       ],
@@ -494,7 +494,7 @@
     },
     "preview:core-xlsx-tdf145057.xlsx": {
       "ok": true,
-      "ms": 7024,
+      "ms": 4813,
       "missingFonts": [
         "Calibri"
       ],
@@ -508,7 +508,7 @@
     },
     "preview:core-xlsx-tdf83671_SmartArt_import.xlsx": {
       "ok": true,
-      "ms": 8355,
+      "ms": 7612,
       "missingFonts": [
         "Courier New"
       ],
@@ -522,7 +522,7 @@
     },
     "preview:core-xlsx-universal-content-strict.xlsx": {
       "ok": true,
-      "ms": 7474,
+      "ms": 7461,
       "missingFonts": [
         "Arial"
       ],
@@ -535,7 +535,7 @@
     },
     "preview:edge-cjk.docx": {
       "ok": true,
-      "ms": 9673,
+      "ms": 7781,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "ac37746d297fc66dcfe605beb714376b2cd283eb9259000b77be407cfc8c0efe",
@@ -549,7 +549,7 @@
     },
     "preview:edge-long.docx": {
       "ok": true,
-      "ms": 11618,
+      "ms": 10150,
       "missingFonts": [],
       "pages": 89,
       "textSha256": "07e300175a9b01cc7468face738beec6a3b9547621279acc828497dc2351fd97",
@@ -561,7 +561,7 @@
     },
     "preview:edge-missing-font.docx": {
       "ok": true,
-      "ms": 8526,
+      "ms": 7152,
       "missingFonts": [
         "Magda Missing Font"
       ],
@@ -574,7 +574,7 @@
     },
     "preview:edge-rtl.xlsx": {
       "ok": true,
-      "ms": 8467,
+      "ms": 7106,
       "missingFonts": [
         "Calibri"
       ],
@@ -589,7 +589,7 @@
     },
     "preview:magda-briefing.pptx": {
       "ok": true,
-      "ms": 11426,
+      "ms": 9246,
       "missingFonts": [
         "Arial"
       ],
@@ -604,7 +604,7 @@
     },
     "preview:magda-budget.xlsx": {
       "ok": true,
-      "ms": 8288,
+      "ms": 6507,
       "missingFonts": [
         "Calibri",
         "Tahoma"
@@ -619,7 +619,7 @@
     },
     "preview:magda-charts.xlsx": {
       "ok": true,
-      "ms": 9241,
+      "ms": 7062,
       "missingFonts": [
         "Calibri"
       ],
@@ -633,25 +633,25 @@
     },
     "preview:magda-document.odt": {
       "ok": false,
-      "ms": 2353,
+      "ms": 1698,
       "code": "invalid-document",
       "message": "Input does not contain a odt document."
     },
     "preview:magda-encrypted.xlsx": {
       "ok": false,
-      "ms": 492,
+      "ms": 369,
       "code": "invalid-document",
       "message": "Input is not a supported, bounded OOXML archive."
     },
     "preview:magda-legacy.doc": {
       "ok": false,
-      "ms": 466,
+      "ms": 365,
       "code": "invalid-document",
       "message": "Legacy Office input has an invalid or truncated compound-file header."
     },
     "preview:magda-legacy.xls": {
       "ok": false,
-      "ms": 410,
+      "ms": 437,
       "code": "invalid-document",
       "message": "Legacy Office input has an invalid or truncated compound-file header."
     },
@@ -663,7 +663,7 @@
     },
     "preview:magda-report.docx": {
       "ok": true,
-      "ms": 7380,
+      "ms": 6281,
       "missingFonts": [],
       "pages": 1,
       "textSha256": "08de7149a8ea25541955a1f8e2727991756ace2c5f0ec373f6cec838946f81d7",
@@ -678,7 +678,7 @@
     },
     "preview:magda-shared-formulas.xlsx": {
       "ok": true,
-      "ms": 8336,
+      "ms": 7059,
       "missingFonts": [],
       "pages": 3,
       "textSha256": "c92266bb29b84f7824280f88067fbca74108cdc259dccf21209b94a75f2f1097",
@@ -689,7 +689,7 @@
     },
     "preview:magda-strict-shared-formulas.xlsx": {
       "ok": true,
-      "ms": 8741,
+      "ms": 7379,
       "missingFonts": [],
       "pages": 3,
       "textSha256": "c92266bb29b84f7824280f88067fbca74108cdc259dccf21209b94a75f2f1097",
@@ -700,13 +700,13 @@
     },
     "preview:magda-truncated.docx": {
       "ok": false,
-      "ms": 3140,
+      "ms": 2260,
       "code": "invalid-document",
       "message": "Input is not a supported, bounded OOXML archive."
     },
     "preview:magda-uncalculated.xlsx": {
       "ok": true,
-      "ms": 6647,
+      "ms": 4774,
       "missingFonts": [
         "Calibri"
       ],
@@ -719,14 +719,14 @@
     },
     "preview:magda-zip-encrypted.xlsx": {
       "ok": false,
-      "ms": 7175,
+      "ms": 5565,
       "code": "failed",
       "message": "loadComponentFromURL returned an empty reference"
     },
     "api:cancel": {
       "ok": true,
       "cancelled": true,
-      "ms": 517
+      "ms": 530
     },
     "api:reuse-after-cancel": {
       "ok": true,
@@ -752,7 +752,7 @@
     },
     "render:core-doc-image-comment-at-char.doc": {
       "ok": true,
-      "ms": 8172,
+      "ms": 7477,
       "images": [
         {
           "file": "page-0001.png",
@@ -765,7 +765,7 @@
     },
     "render:core-doc-n816603.doc": {
       "ok": true,
-      "ms": 8292,
+      "ms": 6381,
       "images": [
         {
           "file": "page-0001.png",
@@ -778,7 +778,7 @@
     },
     "render:core-doc-tdf106541_cancelOutline.doc": {
       "ok": true,
-      "ms": 6350,
+      "ms": 5298,
       "images": [
         {
           "file": "page-0001.png",
@@ -791,7 +791,7 @@
     },
     "render:core-doc-tdf123433_fillStyleStop.doc": {
       "ok": true,
-      "ms": 6810,
+      "ms": 6186,
       "images": [
         {
           "file": "page-0001.png",
@@ -804,7 +804,7 @@
     },
     "render:core-doc-tdf37778_readonlySection.doc": {
       "ok": true,
-      "ms": 6732,
+      "ms": 5475,
       "images": [
         {
           "file": "page-0001.png",
@@ -817,7 +817,7 @@
     },
     "render:core-doc-tdf89377_tableWithBreakBeforeParaStyle.doc": {
       "ok": true,
-      "ms": 6369,
+      "ms": 4800,
       "images": [
         {
           "file": "page-0001.png",
@@ -830,7 +830,7 @@
     },
     "render:core-docx-custom-styles-TOC-comma.docx": {
       "ok": true,
-      "ms": 7436,
+      "ms": 6458,
       "images": [
         {
           "file": "page-0001.png",
@@ -843,7 +843,7 @@
     },
     "render:core-docx-fdo64350.docx": {
       "ok": true,
-      "ms": 6610,
+      "ms": 5760,
       "images": [
         {
           "file": "page-0001.png",
@@ -856,7 +856,7 @@
     },
     "render:core-docx-page-break-before.docx": {
       "ok": true,
-      "ms": 7364,
+      "ms": 5220,
       "images": [
         {
           "file": "page-0001.png",
@@ -869,7 +869,7 @@
     },
     "render:core-docx-tdf114308.docx": {
       "ok": true,
-      "ms": 8028,
+      "ms": 6610,
       "images": [
         {
           "file": "page-0001.png",
@@ -882,7 +882,7 @@
     },
     "render:core-docx-tdf148361.docx": {
       "ok": true,
-      "ms": 6814,
+      "ms": 5701,
       "images": [
         {
           "file": "page-0001.png",
@@ -895,7 +895,7 @@
     },
     "render:core-docx-tdf91594.docx": {
       "ok": true,
-      "ms": 7667,
+      "ms": 5517,
       "images": [
         {
           "file": "page-0001.png",
@@ -908,7 +908,7 @@
     },
     "render:core-ppt-tdf119629.ppt": {
       "ok": true,
-      "ms": 8168,
+      "ms": 7283,
       "images": [
         {
           "file": "page-0001.png",
@@ -921,7 +921,7 @@
     },
     "render:core-ppt-tdf143315-WordartWithoutBullet.ppt": {
       "ok": true,
-      "ms": 8103,
+      "ms": 6133,
       "images": [
         {
           "file": "page-0001.png",
@@ -934,7 +934,7 @@
     },
     "render:core-ppt-tdf165262.ppt": {
       "ok": true,
-      "ms": 7680,
+      "ms": 6435,
       "images": [
         {
           "file": "page-0001.png",
@@ -947,7 +947,7 @@
     },
     "render:core-ppt-tdf169705.ppt": {
       "ok": true,
-      "ms": 8802,
+      "ms": 6747,
       "images": [
         {
           "file": "page-0001.png",
@@ -960,7 +960,7 @@
     },
     "render:core-ppt-tdf49561.ppt": {
       "ok": true,
-      "ms": 7561,
+      "ms": 6136,
       "images": [
         {
           "file": "page-0001.png",
@@ -973,7 +973,7 @@
     },
     "render:core-ppt-tdf49856.ppt": {
       "ok": true,
-      "ms": 7812,
+      "ms": 6386,
       "images": [
         {
           "file": "page-0001.png",
@@ -986,7 +986,7 @@
     },
     "render:core-pptx-n821567.pptx": {
       "ok": true,
-      "ms": 9321,
+      "ms": 7615,
       "images": [
         {
           "file": "page-0001.png",
@@ -1001,7 +1001,7 @@
     },
     "render:core-pptx-tcPr-vert-roundtrip.pptx": {
       "ok": true,
-      "ms": 11212,
+      "ms": 8170,
       "images": [
         {
           "file": "page-0001.png",
@@ -1016,7 +1016,7 @@
     },
     "render:core-pptx-tdf104015.pptx": {
       "ok": true,
-      "ms": 7034,
+      "ms": 6871,
       "images": [
         {
           "file": "page-0001.png",
@@ -1029,7 +1029,7 @@
     },
     "render:core-pptx-tdf114913.pptx": {
       "ok": true,
-      "ms": 9207,
+      "ms": 6972,
       "images": [
         {
           "file": "page-0001.png",
@@ -1044,7 +1044,7 @@
     },
     "render:core-pptx-tdf116350-texteffects.pptx": {
       "ok": true,
-      "ms": 10186,
+      "ms": 6771,
       "images": [
         {
           "file": "page-0001.png",
@@ -1059,7 +1059,7 @@
     },
     "render:core-pptx-tdf98603.pptx": {
       "ok": true,
-      "ms": 9412,
+      "ms": 7342,
       "images": [
         {
           "file": "page-0001.png",
@@ -1075,7 +1075,7 @@
     },
     "render:core-xls-cell-multi-line.xls": {
       "ok": true,
-      "ms": 6493,
+      "ms": 4902,
       "images": [
         {
           "file": "page-0001.png",
@@ -1090,7 +1090,7 @@
     },
     "render:core-xls-forum-mso-de-48440.xls": {
       "ok": true,
-      "ms": 9132,
+      "ms": 6639,
       "images": [
         {
           "file": "page-0001.png",
@@ -1105,7 +1105,7 @@
     },
     "render:core-xls-matrix.xls": {
       "ok": true,
-      "ms": 6624,
+      "ms": 6018,
       "images": [
         {
           "file": "page-0001.png",
@@ -1136,7 +1136,7 @@
     },
     "render:core-xls-named-ranges-local.xls": {
       "ok": true,
-      "ms": 6826,
+      "ms": 5118,
       "images": [
         {
           "file": "page-0001.png",
@@ -1151,7 +1151,7 @@
     },
     "render:core-xls-pivottable_date_field_filter.xls": {
       "ok": true,
-      "ms": 6043,
+      "ms": 4504,
       "images": [
         {
           "file": "page-0001.png",
@@ -1174,7 +1174,7 @@
     },
     "render:core-xls-pivottable_number_grouping.xls": {
       "ok": true,
-      "ms": 5979,
+      "ms": 4897,
       "images": [
         {
           "file": "page-0001.png",
@@ -1189,7 +1189,7 @@
     },
     "render:core-xlsx-complex_icon_set.xlsx": {
       "ok": true,
-      "ms": 6280,
+      "ms": 6441,
       "images": [
         {
           "file": "page-0001.png",
@@ -1206,7 +1206,7 @@
     },
     "render:core-xlsx-tdf110440.xlsx": {
       "ok": true,
-      "ms": 5969,
+      "ms": 5799,
       "images": [
         {
           "file": "page-0001.png",
@@ -1223,7 +1223,7 @@
     },
     "render:core-xlsx-tdf112567.xlsx": {
       "ok": true,
-      "ms": 6843,
+      "ms": 5622,
       "images": [
         {
           "file": "page-0001.png",
@@ -1240,7 +1240,7 @@
     },
     "render:core-xlsx-tdf145057.xlsx": {
       "ok": true,
-      "ms": 6085,
+      "ms": 5677,
       "images": [
         {
           "file": "page-0001.png",
@@ -1257,7 +1257,7 @@
     },
     "render:core-xlsx-tdf83671_SmartArt_import.xlsx": {
       "ok": true,
-      "ms": 7051,
+      "ms": 6078,
       "images": [
         {
           "file": "page-0001.png",
@@ -1274,7 +1274,7 @@
     },
     "render:core-xlsx-universal-content-strict.xlsx": {
       "ok": true,
-      "ms": 7287,
+      "ms": 5559,
       "images": [
         {
           "file": "page-0001.png",
@@ -1299,7 +1299,7 @@
     },
     "render:edge-cjk.docx": {
       "ok": true,
-      "ms": 9011,
+      "ms": 7372,
       "images": [
         {
           "file": "page-0001.png",
@@ -1312,7 +1312,7 @@
     },
     "render:edge-long.docx": {
       "ok": true,
-      "ms": 10014,
+      "ms": 8269,
       "images": [
         {
           "file": "page-0001.png",
@@ -1325,7 +1325,7 @@
     },
     "render:edge-missing-font.docx": {
       "ok": true,
-      "ms": 8006,
+      "ms": 6041,
       "images": [
         {
           "file": "page-0001.png",
@@ -1340,7 +1340,7 @@
     },
     "render:edge-rtl.xlsx": {
       "ok": true,
-      "ms": 8213,
+      "ms": 7094,
       "images": [
         {
           "file": "page-0001.png",
@@ -1357,7 +1357,7 @@
     },
     "render:magda-briefing.pptx": {
       "ok": true,
-      "ms": 8921,
+      "ms": 7730,
       "images": [
         {
           "file": "page-0001.png",
@@ -1372,7 +1372,7 @@
     },
     "render:magda-budget.xlsx": {
       "ok": true,
-      "ms": 7237,
+      "ms": 5962,
       "images": [
         {
           "file": "page-0001.png",
@@ -1390,7 +1390,7 @@
     },
     "render:magda-charts.xlsx": {
       "ok": true,
-      "ms": 7421,
+      "ms": 7572,
       "images": [
         {
           "file": "page-0001.png",
@@ -1407,42 +1407,42 @@
     },
     "render:magda-document.odt": {
       "ok": false,
-      "ms": 962,
+      "ms": 546,
       "code": "invalid-document",
       "message": "Input does not contain a odt document.",
       "exit": 1
     },
     "render:magda-encrypted.xlsx": {
       "ok": false,
-      "ms": 938,
+      "ms": 653,
       "code": "invalid-document",
       "message": "Input is not a supported, bounded OOXML archive.",
       "exit": 1
     },
     "render:magda-legacy.doc": {
       "ok": false,
-      "ms": 1079,
+      "ms": 743,
       "code": "invalid-document",
       "message": "Legacy Office input has an invalid or truncated compound-file header.",
       "exit": 1
     },
     "render:magda-legacy.xls": {
       "ok": false,
-      "ms": 808,
+      "ms": 726,
       "code": "invalid-document",
       "message": "Legacy Office input has an invalid or truncated compound-file header.",
       "exit": 1
     },
     "render:magda-misnamed-spreadsheet.docx": {
       "ok": false,
-      "ms": 1165,
+      "ms": 750,
       "code": "invalid-document",
       "message": "Input does not contain a docx document.",
       "exit": 1
     },
     "render:magda-report.docx": {
       "ok": true,
-      "ms": 8711,
+      "ms": 6915,
       "images": [
         {
           "file": "page-0001.png",
@@ -1455,7 +1455,7 @@
     },
     "render:magda-shared-formulas.xlsx": {
       "ok": true,
-      "ms": 7980,
+      "ms": 6607,
       "images": [
         {
           "file": "page-0001.png",
@@ -1470,7 +1470,7 @@
     },
     "render:magda-strict-shared-formulas.xlsx": {
       "ok": true,
-      "ms": 7372,
+      "ms": 5799,
       "images": [
         {
           "file": "page-0001.png",
@@ -1501,14 +1501,14 @@
     },
     "render:magda-truncated.docx": {
       "ok": false,
-      "ms": 763,
+      "ms": 635,
       "code": "invalid-document",
       "message": "Input is not a supported, bounded OOXML archive.",
       "exit": 1
     },
     "render:magda-uncalculated.xlsx": {
       "ok": true,
-      "ms": 6643,
+      "ms": 5151,
       "images": [
         {
           "file": "page-0001.png",
@@ -1525,7 +1525,7 @@
     },
     "render:magda-zip-encrypted.xlsx": {
       "ok": false,
-      "ms": 5574,
+      "ms": 4514,
       "code": "failed",
       "message": "loadComponentFromURL returned an empty reference",
       "exit": 1
@@ -8160,7 +8160,7 @@
     },
     "recalculate:magda-legacy.xls": {
       "ok": false,
-      "ms": 920,
+      "ms": 759,
       "code": "invalid-document",
       "message": "Legacy Office input has an invalid or truncated compound-file header.",
       "exit": 1
@@ -12139,17 +12139,17 @@
     },
     "convert:report.txt": {
       "ok": true,
-      "ms": 8288,
+      "ms": 7062,
       "sha256": "7d1b265eb1bfb7183570572c5fe98ffde67a014364af4964fd56151f30af9563"
     },
     "convert:budget.csv": {
       "ok": true,
-      "ms": 6566,
+      "ms": 5298,
       "sha256": "d30c17e524a9a1a492a65a9ff870d48fbda0f3bdc811b8a9320adcbe86dee165"
     },
     "convert:report.odt": {
       "ok": true,
-      "ms": 9743,
+      "ms": 8383,
       "parts": {
         "Configurations2/": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "META-INF/manifest.xml": "b79a1dc1443745a020357a26603d30ae4283ccd6539574b83e36b0ce08da5d7e",
@@ -12164,7 +12164,7 @@
     },
     "convert:briefing.pdf": {
       "ok": true,
-      "ms": 11805,
+      "ms": 10379,
       "pages": 4,
       "textSha256": "aff52b786150b29ae7576635a577f104de855fd650aad75ac41e2c05df5f077a",
       "textChars": 302,
@@ -12176,7 +12176,7 @@
     },
     "convert:missing-sheet.csv": {
       "ok": false,
-      "ms": 3268,
+      "ms": 5071,
       "code": "failed",
       "message": "CSV worksheet was not found",
       "exit": 1

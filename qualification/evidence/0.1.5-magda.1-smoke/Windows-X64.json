@@ -1,0 +1,56 @@
+{
+  "host": "win32-x64",
+  "node": "v22.23.5",
+  "checks": [
+    {
+      "name": "capabilities selects the WASM engine",
+      "ok": true,
+      "ms": 199,
+      "facts": {
+        "version": "0.1.5-magda.1"
+      }
+    },
+    {
+      "name": "DOCX to text equals the Linux reference",
+      "ok": true,
+      "ms": 8229
+    },
+    {
+      "name": "XLSX to CSV equals the Linux reference",
+      "ok": true,
+      "ms": 2836
+    },
+    {
+      "name": "recalculation computes the missing formula result",
+      "ok": true,
+      "ms": 5592
+    },
+    {
+      "name": "PPTX slide renders at the reference geometry",
+      "ok": true,
+      "ms": 4050,
+      "facts": {
+        "missingFonts": []
+      }
+    },
+    {
+      "name": "worksheet range renders as one image",
+      "ok": true,
+      "ms": 3003
+    },
+    {
+      "name": "preview API renders PDFs and survives cancellation",
+      "ok": true,
+      "ms": 12572,
+      "facts": {
+        "reportMissingFonts": [],
+        "briefingMissingFonts": []
+      }
+    },
+    {
+      "name": "unsupported and corrupt inputs fail with codes",
+      "ok": true,
+      "ms": 1482
+    }
+  ]
+}
